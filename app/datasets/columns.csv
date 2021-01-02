@@ -1,0 +1,7 @@
+disease,climate1,climate2
+influenza,vaporation,humidity_min
+influenza_death,rain,temperature
+dengue_fever,max_rain,temperature_min
+dengue_fever_death,raining_day,temperature_max
+diarrhoea,sun_hour,temperature_abs_min
+diarrhoea_death,humidity,temperature_abs_max

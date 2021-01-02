@@ -1,0 +1,66 @@
+<div class="left-sidebar-pro">
+  <nav id="sidebar" style="width: min-content;">
+    <div class="sidebar-header">
+      <a href="/">
+        <!-- <div class="sidebar-brand-icon "> -->
+        <img src="/static/img/logo.png" height="50px" width="60px" alt="logo" style="margin-top: 2%;">
+        <!-- </div> -->
+        <div class="sidebar-brand-text mx-3">
+          <b>
+            PANDEMIC
+          </b>
+        </div>
+      </a>
+      <hr>
+    </div>
+    <div class="left-custom-menu-adp-wrap comment-scrollbar">
+      <nav class="sidebar-nav left-sidebar-menu-pro">
+        <ul class="metismenu" id="menu1">
+          <li class="active">
+            <a class="has-arrow">
+              <!-- <span class="educate-icon educate-home icon-wrap"></span> -->
+              <i class="fa fa-heartbeat text-danger" aria-hidden="true"></i>
+              <span class="mini-click-non">Disease</span>
+            </a>
+            <ul class="submenu-angle" aria-expanded="true">
+              {% for opt in disease_factor %}
+              <li>
+                <a title="Dashboard v.1">
+                <input type="radio" class="disease_select" id="disease_select" name="drone" value="{{opt.name}}">
+                <label class="mini-sub-pro" for="disease_select">
+                  {{((opt.name).title()).replace('_',' ')}}
+                </label>
+              </a>
+            </li>
+              <!-- <li><a title="Dashboard v.2" href="index-1.html"><span class="mini-sub-pro">Dashboard v.2</span></a></li>
+              <li><a title="Dashboard v.3" href="index-2.html"><span class="mini-sub-pro">Dashboard v.3</span></a></li>
+              <li><a title="Analytics" href="analytics.html"><span class="mini-sub-pro">Analytics</span></a></li>
+              <li><a title="Widgets" href="widgets.html"><span class="mini-sub-pro">Widgets</span></a></li> -->
+              {% endfor %}
+            </ul>
+          </li>
+          <li>
+            <a title="Landing Page" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg"
+                aria-hidden="true">
+                Begin
+              </span>
+              <span class="indicator_begin">1997<span></span></span>
+              <input type="range" min="1997" max="2019" value="1997" class="begin" />
+            </a>
+          </li>
+          <li>
+            <a title="Landing Page" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg"
+                aria-hidden="true">
+                End
+              </span>
+              <span class="indicator_end">1997<span></span></span>
+              <input type="range" min="1997" max="2019" value="2019" class="end" />
+            </a>
+          </li>
+          <!-- end menu  -->
+        </ul>
+      </nav>
+    </div>
+  </nav>
+</div>
+<!-- End Left menu area -->

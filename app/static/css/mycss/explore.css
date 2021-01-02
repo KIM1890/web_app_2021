@@ -1,0 +1,48 @@
+.modal-content {
+  width: 130vh !important;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+}
+
+.mvn path {
+  fill:#88a4bc;
+  stroke:#ffffff;
+  stroke-width: 1;
+  transition: fill 0.3s;
+}
+.mapvietnam path:hover {
+  fill: #3b729f;
+}
+
+.mapvietnam {
+  width: 546px;
+  height: 500px;
+  margin-left: -20px;
+  margin-top: 6px;
+  border-style: hidden;
+  overflow: hidden;
+}
+.btn_desease {
+  top: 33%;
+  left: 84%;
+  width: auto;
+}
+
+.btn_region {
+  background: #f0f0f5;
+  z-index: 100;
+  top: 8px;
+  left: 84%;
+}
+
+.btn-info {
+  width: 100px
+}
+
+.chosen:active {
+  background-color: #dd4814;
+}
+/* .product-sales-chart{
+  width: max-content;
+} */

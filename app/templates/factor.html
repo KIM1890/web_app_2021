@@ -1,0 +1,146 @@
+{% extends 'base_factor.html' %} {% block title %}Compare Data{% endblock %} {% block content %}
+<!-- Mobile Menu end -->
+<div class="breadcome-area">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="breadcome-list">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="breadcome-heading">
+                <!-- <marquee behavior='scroll' direction='right'> -->
+                <h4 style="color: brown;" class="title_factor">
+                 
+                </h4>
+                <!-- </marquee> -->
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <ul class="breadcome-menu">
+                <li><a href="/">Home</a> <span class="bread-slash">/</span>
+                </li>
+                <li><span class="bread-blod">Explore Disease</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- show chart in here  -->
+<div class="product-sales-area mg-tb-30" id='comp_disease_none'>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="product-sales-chart">
+          <div class="portlet-title">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="caption pro-sl-hd">
+                  <span class="caption-subject" id="comp_disease_title"><b></b></span>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="actions graph-rp graph-rp-dl">
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="comp_disease" id="comp_disease" style="height: auto;width:auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- subplotly  -->
+
+<div class="product-sales-area mg-tb-30" id="subplot_year">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="product-sales-chart">
+          <div class="portlet-title">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="caption pro-sl-hd">
+                  <span class="caption-subject" id="sub_title_year"><b></b></span>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="actions graph-rp graph-rp-dl">
+                  <!-- check radio  -->
+                  <input type="radio" class="radioBtnClass" name="numbers" value="year" checked/>Year
+                  &emsp;
+                  <input type="radio" class="radioBtnClass" name="numbers" value="month" />Month
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subplotly_y" id="subplotly_y" style="height: auto;width:auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- subplotly year  -->
+<!-- <div class="product-sales-area mg-tb-30" id="statistic">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="product-sales-chart">
+          <div class="portlet-title">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="caption pro-sl-hd">
+                  <span class="caption-subject" id="sub_title"><b></b></span>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="actions graph-rp graph-rp-dl">
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subplotly" id="subplotly" style="height: auto;width:auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="product-sales-area mg-tb-30" id="correlation">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="product-sales-chart">
+          <div class="portlet-title">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="caption pro-sl-hd">
+                  <span class="caption-subject" id="sub_corr_title"><b></b></span>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="actions graph-rp graph-rp-dl">
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="corr_compare" id="corr_compare" style="height: auto;width:auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- footer  -->
+{% include('footer.html')%}
+<!-- end footer  -->
+{% endblock %}

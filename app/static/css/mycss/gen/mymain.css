@@ -1,0 +1,230 @@
+.table-scroll{
+    display: block;
+    empty-cells: show;
+
+    /* Decoration */
+    border-spacing: 0;
+    border: none;
+  }
+
+  .table-scroll thead{
+    background-color: #f1f1f1;
+    position:relative;
+    display: block;
+    width:100%;
+    overflow-y: scroll;
+  }
+
+  .table-scroll tbody{
+    /* Position */
+    display: block; position:relative;
+    width:100%; overflow-y:scroll;
+    /* Decoration */
+    border-top: 1px solid rgba(0,0,0,0.2);
+    border-left: 3px;
+  }
+
+  .table-scroll tr{
+    width: 100%;
+    display:flex;
+  }
+
+  .table-scroll td,.table-scroll th{
+    flex-basis:100%;
+    flex-grow:2;
+    display: block;
+    padding: 1rem;
+    text-align:left;
+  }
+
+  /* Other options */
+
+  .table-scroll.small-first-col td:first-child,
+  .table-scroll.small-first-col th:first-child{
+    flex-basis:20%;
+    flex-grow:1;
+  }
+
+  .table-scroll tbody tr:nth-child(2n){
+    background-color: rgba(130,130,170,0.1);
+  }
+
+  .body-half-screen{
+    max-height: 50vh;
+  }
+
+  .small-col{flex-basis:10%;}
+
+.modal-content {
+  width: 130vh !important;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+}
+
+.mvn path {
+  fill:#88a4bc;
+  stroke:#ffffff;
+  stroke-width: 1;
+  transition: fill 0.3s;
+}
+.mapvietnam path:hover {
+  fill: #3b729f;
+}
+
+.mapvietnam {
+  width: 546px;
+  height: 500px;
+  margin-left: -20px;
+  margin-top: 6px;
+  border-style: hidden;
+  overflow: hidden;
+}
+.btn_desease {
+  top: 33%;
+  left: 84%;
+  width: auto;
+}
+
+.btn_region {
+  background: #f0f0f5;
+  z-index: 100;
+  top: 8px;
+  left: 84%;
+}
+
+.btn-info {
+  width: 100px
+}
+
+.chosen:active {
+  background-color: #dd4814;
+}
+.tooltip {
+  z-index: 100 !important;
+  position: absolute !important;
+}
+
+.timeline {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.li {
+  transition: all 200ms ease-in;
+}
+
+.timestamp {
+  margin-bottom: 20px;
+  padding: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 10;
+}
+
+.status {
+  padding: 0px 10px;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid #D6DCE0;
+  position: relative;
+  transition: all 200ms ease-in;
+}
+
+.status h4 {
+  font-weight: 600;
+}
+
+.status:before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  position: absolute;
+  top: -5px;
+  left: 42%;
+  transition: all 200ms ease-in;
+}
+
+.li.complete .status {
+  border-top: 2px solid cornflowerblue;
+}
+
+.li.complete .status:before {
+  background-color: cornflowerblue;
+  border: none;
+  transition: all 200ms ease-in;
+}
+
+.li.complete .status h4 {
+  color: cornflowerblue;
+}
+
+.setcolor:before {
+  background: red !important;
+}
+
+.setcolormap:before {
+  background: orange !important;
+}
+
+.modal-content {
+  width: 130vh !important;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+}
+/* map 1 div  */
+/* cho map svg css  */
+.map1div {
+  width: 546px;
+  height: 700px;
+  margin: auto;
+  margin-top: 6px;
+  border-style: hidden;
+  overflow: hidden;
+  /* transform-origin: 0 0;
+    cursor: all-scroll; */
+}
+
+.mapvn path {
+  fill:#88a4bc;
+  stroke: #ffffff;
+  stroke-width: 1;
+  transition: fill 0.3s;
+}
+
+.map1div path:hover {
+  fill: #3b729f;
+}
+/* map 2 div  */
+/* cho map svg css  */
+.map2div {
+  width: 546px;
+  height: 500px;
+  margin-left: -20px;
+  margin-top: 6px;
+  border-style: hidden;
+  overflow: hidden;
+}
+
+.map2div path {
+  fill: #88a4bc;
+  stroke:#ffffff;
+  stroke-width: 1;
+  transition: fill 0.3s;
+}
+
+.map2div path:hover {
+  fill:#3b729f;
+}
+.yearoption {
+  z-index: 100;
+  top: -500px;
+  left: 100%;
+}

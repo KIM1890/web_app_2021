@@ -1,0 +1,55 @@
+.modal-content {
+  width: 130vh !important;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+}
+/* map 1 div  */
+/* cho map svg css  */
+.map1div {
+  width: 546px;
+  height: 700px;
+  margin: auto;
+  margin-top: 6px;
+  border-style: hidden;
+  overflow: hidden;
+  /* transform-origin: 0 0;
+    cursor: all-scroll; */
+}
+
+.mapvn path {
+  fill:#88a4bc;
+  stroke: #ffffff;
+  stroke-width: 1;
+  transition: fill 0.3s;
+}
+
+.map1div path:hover {
+  fill: #3b729f;
+}
+/* map 2 div  */
+/* cho map svg css  */
+.map2div {
+  width: 546px;
+  height: 500px;
+  margin-left: -20px;
+  margin-top: 6px;
+  border-style: hidden;
+  overflow: hidden;
+}
+
+.map2div path {
+  fill: #88a4bc;
+  stroke:#ffffff;
+  stroke-width: 1;
+  transition: fill 0.3s;
+}
+
+.map2div path:hover {
+  fill:#3b729f;
+}
+.yearoption {
+  z-index: 100;
+  top: -500px;
+  left: 100%;
+}

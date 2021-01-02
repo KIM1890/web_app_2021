@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% block title %}Compare Data{% endblock %} {% block content %}
+<!-- Mobile Menu end -->
+<div class="breadcome-area">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="breadcome-list">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="breadcome-heading">
+                <!-- <marquee behavior='scroll' direction='right'> -->
+                <h4 style="color: brown;" class="title_comp">
+                  
+                  <!-- From 1997-2019 -->
+                </h4>
+                <!-- </marquee> -->
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <ul class="breadcome-menu">
+                <li><a href="/">Home</a> <span class="bread-slash">/</span>
+                </li>
+                <li><span class="bread-blod">Compare Province</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="product-sales-area mg-tb-30">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <div class="product-sales-chart">
+          <div class="portlet-title">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="caption pro-sl-hd">
+                  <span class="caption-subject"><b>Map Viet Nam</b></span>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="actions graph-rp graph-rp-dl">
+                  <p style="color: orangered;">Please choose two province you want compare!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="map2div">
+            {% include('svg_map_vn.html') %}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 showresult_popu">
+        <!-- show chart in here  -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- show chart in here  -->
+<div class="disease_comp">
+  <!-- show chart in here  -->
+</div>
+<div class="climate_comp">
+  <!-- show chart in here  -->
+</div>
+<!-- footer  -->
+{% include('footer.html') %}
+<!-- end footer  -->
+{% endblock %}

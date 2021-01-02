@@ -1,0 +1,54 @@
+{% for elemt in feature_selected %}
+{% if elemt.population0 != 0%}
+<div class="analysis-progrebar res-mg-t-30 mg-ub-10 res-mg-b-30 table-mg-t-pro-n tb-sm-res-d-n dk-res-t-d-n">
+    <div class="analysis-progrebar-content">
+        <h5>Province
+            <p class="min_max"></p>
+        </h5>
+        <!-- <h2 class="storage-right"><span class="counter">90</span>%</h2> -->
+        <div class="progress progress-mini ug-1">
+            <div style="width: 100%;" class="progress-bar"></div>
+        </div>
+        <div class="m-t-sm small">
+            <p>{{(elemt.name0)}}</p>
+        </div>
+    </div>
+</div>
+<div class="analysis-progrebar reso-mg-b-30 res-mg-b-30 mg-ub-10 tb-sm-res-d-n dk-res-t-d-n">
+    <div class="analysis-progrebar-content">
+        <h5>Total Population</h5>
+        <!-- <h2 class="storage-right"><span class="counter">70</span>%</h2> -->
+        <div class="progress progress-mini ug-2">
+            <div style="width: 100%;" class="progress-bar"></div>
+        </div>
+        <div class="m-t-sm small">
+            <p>{{"{:,}".format(elemt.population0)}} (thousand people)</p>
+        </div>
+    </div>
+</div>
+<div class="analysis-progrebar reso-mg-b-30 res-mg-b-30 res-mg-t-30 mg-ub-10 tb-sm-res-d-n dk-res-t-d-n">
+    <div class="analysis-progrebar-content">
+        <h5>Province</h5>
+        <!-- <h2 class="storage-right"><span class="counter">50</span>%</h2> -->
+        <div class="progress progress-mini ug-3">
+            <div style="width: 100%;" class="progress-bar progress-bar-danger"></div>
+        </div>
+        <div class="m-t-sm small">
+            <p>{{elemt.name1}}</p>
+        </div>
+    </div>
+</div>
+<div class="analysis-progrebar res-mg-t-30 table-dis-n-pro tb-sm-res-d-n dk-res-t-d-n">
+    <div class="analysis-progrebar-content">
+        <h5>Total Population</h5>
+        <!-- <h2 class="storage-right"><span class="counter">40</span>%</h2> -->
+        <div class="progress progress-mini ug-4">
+            <div style="width: 100%;" class="progress-bar progress-bar-danger"></div>
+        </div>
+        <div class="m-t-sm small">
+            <p>{{"{:,}".format(elemt.population1)}} (thousand people)</p>
+        </div>
+    </div>
+</div>
+{%endif%}
+{% endfor %}

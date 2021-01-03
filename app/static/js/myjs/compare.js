@@ -93,13 +93,7 @@ $(document).ready(function () {
     // check time 
     var begin = $(".begin").val();
     var end = $(".end").val();
-    // if (begin > end) {
-    //   $.alert({
-    //     title: 'Notification!',
-    //     content: 'Please chose begin year bigger than end year!',
-    //   });
-    //   return false;
-    // }
+
     if (this.checked) {
       disease_pro_array.push(this.value);
       if ((id_click_once == 0) & (id_click_twice == 0)) {
@@ -119,13 +113,7 @@ $(document).ready(function () {
     // check time 
     var begin = $(".begin").val();
     var end = $(".end").val();
-    // if (begin > end) {
-    //   $.alert({
-    //     title: 'Notification!',
-    //     content: 'Please chose begin year bigger than end year!',
-    //   });
-    //   return false;
-    // }
+
     if (this.checked) {
       climate_pro_array.push(this.value);
       if ((id_click_once == 0) & (id_click_twice == 0)) {
@@ -157,8 +145,7 @@ $(document).ready(function () {
             } else {
               $(`#${id_click_twice}`).css("fill", "#88a4bc");
               click_event_twice_orange(id, 0);
-              // check exist province code
-              // exist_data_comp(id,count_click);
+
             }
           }
         });
@@ -431,7 +418,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`pie_disease_y_${order}`, data, {});
-        $(`#pie_disease_year_${order}`).html(`Number case of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#pie_disease_year_${order}`).html(`Number case of ${name.split('_').join('  ')} 
+        by yearly mean  ${begin}-${end}`);
       },
     });
     // line year disease
@@ -449,7 +437,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`line_pro_year_${order}`, data, {});
-        $(`#title_pro_year_${order}`).html(`Number case of  ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#title_pro_year_${order}`).html(`Number case of  ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
       },
     });
     // line month disease
@@ -467,7 +455,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`line_pro_month_${order}`, data, {});
-        $(`#title_pro_month_${order}`).html(`Number of  ${name.split('_').join('  ')} monthly mean from ${begin}-${end}`);
+        $(`#title_pro_month_${order}`).html(`Number of  ${name.split('_').join('  ')} monthly mean  ${begin}-${end}`);
       },
     });
     // disease_date1_comp_${order}
@@ -485,7 +473,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`disease_date1_comp_${order}`, data, {});
-        $(`#title_date1_comp_disease_${order}`).html(`Number case of  ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#title_date1_comp_disease_${order}`).html(`Number case of  ${name.split('_').join('  ')} 
+        by monthly mean  ${begin}-${end}`);
       },
     });
     // linear disease year
@@ -503,7 +492,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`linear_disease_y_${order}`, data, {});
-        $(`#linear_disease_year_${order}`).html(`Linear of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#linear_disease_year_${order}`).html(`Linear of ${name.split('_').join('  ')} by yearly mean ${begin}-${end}`);
       },
     });
     // linear disease month
@@ -521,7 +510,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`linear_pro_month_${order}`, data, {});
-        $(`#linear_title_year_${order}`).html(`Linear of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#linear_title_year_${order}`).html(`Linear of ${name.split('_').join('  ')} 
+        by monthly mean  ${begin}-${end}`);
       },
     });
 
@@ -539,13 +529,7 @@ $(document).ready(function () {
     var i = 0;
     var begin = $(".begin").val();
     var end = $(".end").val();
-    // if (begin > end) {
-    //   $.alert({
-    //     title: 'Notification!',
-    //     content: 'Please chose begin year bigger than end year!',
-    //   });
-    //   return false;
-    // }
+
     $.each(disease_pro_array, function (index, value) {
       i++;
       chosen_province_disease(begin, end, value, i);
@@ -569,7 +553,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`pie_climate_y_${order}`, data, {});
-        $(`#pie_climate_year_${order}`).html(`Number of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#pie_climate_year_${order}`).html(`Number of ${name.split('_').join('  ')} 
+        by yearly mean  ${begin}-${end}`);
       },
     });
     // line year climate
@@ -587,7 +572,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`climate_pro_y_${order}`, data, {});
-        $(`#climate_pro_year_${order}`).html(`Number of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#climate_pro_year_${order}`).html(`Number of ${name.split('_').join('  ')} 
+        by yearly mean  ${begin}-${end}`);
       },
     });
     // line month climate
@@ -605,7 +591,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`climate_pro_m_${order}`, data, {});
-        $(`#climate_pro_month_${order}`).html(`Number of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#climate_pro_month_${order}`).html(`Number of ${name.split('_').join('  ')} 
+        by monthly mean  ${begin}-${end}`);
       },
     });
     // date1 climate 
@@ -624,7 +611,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`climate_date1_comp_${order}`, data, {});
-        $(`#title_date1_comp_${order}`).html(`Number of ${name.split('_').join('  ')} monthly mean from ${begin}-${end}`);
+        $(`#title_date1_comp_${order}`).html(`Number of ${name.split('_').join('  ')} monthly mean 
+         ${begin}-${end}`);
       },
     });
     // linear year climate
@@ -642,7 +630,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`linear_climate_y_${order}`, data, {});
-        $(`#linear_climate_year_${order}`).html(`Linear of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#linear_climate_year_${order}`).html(`Linear of ${name.split('_').join('  ')} 
+        by yearly mean  ${begin}-${end}`);
       },
     });
     // linear_climate_month
@@ -660,7 +649,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`linear_climate_month_${order}`, data, {});
-        $(`#linear_title_month_${order}`).html(`Linear of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#linear_title_month_${order}`).html(`Linear of ${name.split('_').join('  ')} 
+        by monthly mean  ${begin}-${end}`);
       },
     });
   };
@@ -676,13 +666,7 @@ $(document).ready(function () {
     var i = 0;
     var begin = $(".begin").val();
     var end = $(".end").val();
-    // if (begin > end) {
-    //   $.alert({
-    //     title: 'Notification!',
-    //     content: 'Please chose begin year bigger than end year!',
-    //   });
-    //   return false;
-    // }
+
     $.each(climate_pro_array, function (index, value) {
       i++;
       chosen_province_climate(begin, end, value, i);
@@ -718,21 +702,7 @@ $(document).ready(function () {
   function getData_comp(id, id0) {
     var begin = $(".begin").val();
     var end = $(".end").val();
-    // if (begin > end) {
-    //   $.confirm({
-    //     title: "Notification",
-    //     content: "Please chose begin year bigger than end year!",
-    //     buttons: {
-    //       ok: {
-    //         btnClas: "btn-primary",
-    //       },
-    //       cancel: {
-    //         btnClass: "btn-danger",
-    //       },
-    //     },
-    //   });
-    //   return false;
-    // }
+
     $.ajax({
       type: "GET",
       url: "/popu_response/" + id + '/' + id0,
@@ -751,7 +721,7 @@ $(document).ready(function () {
   };
   title_comp(1997, 2019);
   function title_comp(begin, end) {
-    $('.title_comp').html(`Compare Province In Viet Nam From ${begin}-${end}`)
+    $('.title_comp').html(`Compare Disease Data In Viet Nam  ${begin}-${end}`)
   }
   $('.min_max').html(`(${begin}-${end})`)
 });

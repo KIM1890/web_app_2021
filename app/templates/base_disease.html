@@ -14,8 +14,8 @@
   <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <!-- <link rel="stylesheet" href="./static/css/bootstrap.min.css"> -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="./static/css/bootstrap.min.css">
+
   <!-- Plotly.js -->
 
   {% assets "main_js" %}
@@ -28,8 +28,9 @@
   {% endassets %}
   <title>{% block title %}{% endblock %}</title>
   <!-- favicon	============================================ -->
-  <link rel="shortcut icon" type="image/x-icon" href="./static/img/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="./static/img/virus.ico">
   <link rel="stylesheet" href="./static/css/font-awesome.min.css">
+
   <!-- Google Fonts
 		============================================ -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
@@ -75,83 +76,14 @@
   <script src="./static/js/vendor/modernizr-2.8.3.min.js"></script>
   <!-- confirm  -->
   <link rel="stylesheet" href="./static/css/jquery-confirm.min.css">
-
 </head>
 
 <body id="page-top">
-  <!-- create menu  -->
-  <div class="left-sidebar-pro">
-    <nav id="sidebar" style="width: min-content;">
-      <div class="sidebar-header">
-        <a href="/">
-          <!-- <div class="sidebar-brand-icon "> -->
-          <img src="/static/img/logo.png" height="50px" width="60px" alt="logo" style="margin-top: 2%;">
-          <!-- </div> -->
-          <div class="sidebar-brand-text mx-1">
-            <b>
-              EPIDEMIC
-            </b>
-          </div>
-          <hr>
-        </a>
 
-      </div>
-      <div class="left-custom-menu-adp-wrap comment-scrollbar">
-        <nav class="sidebar-nav left-sidebar-menu-pro">
-          <ul class="metismenu" id="menu1" style="width: min-content;margin-left: 10px;">
-           
-            <!-- province  -->
-            <li>
-              <div class="form-group">
-                <label for="sel1" style="color: black;">Province:</label>
-                <select class="form-control" id="sel1" style="border-color: cornflowerblue;color: black;">
-                  {% for name,code in province %}
-                  <option class="option_{{code}}" value="{{code}}" name={{name}}>{{name}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </li>
-            <!-- disease  -->
-            <li>
-              <div class="form-group">
-                <label for="sel1" style="color: black;">Disease:</label>
-                <select class="form-control" id="sel1" style="border-color: cornflowerblue;color: black;">
-                  {% for opt in X %}
-                  <option class="option_{{opt}}" value="{{opt}}" name={{opt}}>{{opt.replace('_',' ')}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </li>
-            <!-- algorithm  -->
-            <li>
-              <div class="form-group">
-                <label for="sel1" style="color: black;">Algorithm:</label>
-                <select class="form-control" id="sel1" style="border-color: cornflowerblue;color: black;">
-                  <option class="option_Linear" value="0" name='linear'>LinearRegression</option>
-                  <option class="option_Arima" value="1" name='arima'>ARIMA</option>
-                  <option class="option_Sarima" value="2" name='sarima'>SARIMA</option>
-                </select>
-              </div>
-            </li>
-            <!-- time series  -->
-            <li>
-              <label for="birthday" style="color: black;">Date:</label>
-              <input type="date" id="birthday" name="birthday" style="border-color: cornflowerblue;color: black;">
-            </li>
-            <!-- button run  -->
-            <!-- <li>
-              <button type="button" class="btn btn-primary predict_data">RUN</button>
-            </li> -->
-          </ul>
-        </nav>
-      </div>
-    </nav>
-  </div>
-  <!-- header menu  -->
-  {% include "head_menu.html" %}
-  <!-- end header menu  -->
+  {% include "select_factor.html" %}
+  {% include "header.html" %}
   {% block content %} {% endblock %}
-  <!-- script  -->
+
   <script src="./static/js/wow.min.js"></script>
   <!-- price-slider JS
             ============================================ -->
@@ -188,7 +120,7 @@
 
   <!-- tawk chat JS
                       ============================================ -->
-  <script src="./static/js/tab.js"></script>
+  <!-- <script src="./static/js/tawk-chat.js"></script> -->
   <!-- link js confirm  -->
   <script src="./static/js/jquery-confirm.min.js"></script>
 </body>

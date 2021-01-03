@@ -60,15 +60,6 @@ class GetData:
 
         return vn_json
 
-    # cleaning data
-
-    def cleaning_data(self, data, feature):
-        data = data[(data.index.year == 2019) & (
-                data.index.year == 2017) & (data.index.year == 2018)]
-        data[feature].replace(
-            0, data[feature].mean())
-        return data
-
     # read file csv disease + climate
 
     def get_to_disease_climate(self, province):
@@ -81,57 +72,60 @@ class GetData:
     def get_disease_response(self):
         data = self.get_to_population()
         disease = self.get_to_disease()
-        feature_selected = []
+        feature_selected = [{
+            'population': round(data['population'].mean(), 0),
+            'influenza': round(disease['influenza'].mean(), 0),
+            'diarrhoea': round(disease['diarrhoea'].mean(), 0),
+            'dengue': round(disease['dengue_fever'].mean(), 0)
+        }]
         # get attribute columns
-        feature_selected.append(
-            {
-                'population': round(data['population'].mean(), 0),
-                'influenza': round(disease['influenza'].mean(), 0),
-                'diarrhoea': round(disease['diarrhoea'].mean(), 0),
-                'dengue': round(disease['dengue_fever'].mean(), 0)
-            }
-        )
         return feature_selected
 
     # read mean response disease explore data
 
     def get_disease_response_exp(self, data, disease):
 
-        feature_selected = []
-        # get attribute columns
-        feature_selected.append(
-            {
-                'name': listToString(data['province_name'].unique()),
-                'population': round(data['population'].sum(), 4),
-                'influenza': round(disease['influenza'].sum(), 4),
-                'diarrhoea': round(disease['diarrhoea'].sum(), 4),
-                'dengue': round(disease['dengue_fever'].sum(), 4)
+        feature_selected = [{
+            'name': listToString(data['province_name'].unique()),
+            'population': round(data['population'].sum(), 4),
+            'influenza': round(disease['influenza'].sum(), 4),
+            'diarrhoea': round(disease['diarrhoea'].sum(), 4),
+            'dengue': round(disease['dengue_fever'].sum(), 4)
 
-            }
-        )
+        }]
+        # get attribute columns
         return feature_selected
 
     # read mean response climate explore data
 
     def get_climate_response_exp(self, climate):
-        feature_selected = []
+        feature_selected = [{
+            'vaporation': round(climate['vaporation'].sum(), 4),
+            'rain': round(climate['rain'].sum(), 4),
+            'max_rain': round(climate['max_rain'].sum(), 4),
+            'raining_day': round(climate['raining_day'].sum(), 4),
+            'temperature': round(climate['temperature'].sum(), 4),
+            'temperature_max': round(climate['temperature_max'].sum(), 4),
+            'temperature_min': round(climate['temperature_min'].sum(), 4),
+            'temperature_absolute_min': round(climate['temperature_abs_min'].sum(), 4),
+            'temperature_absolute_max': round(climate['temperature_abs_max'].sum(), 4),
+            'sun_hour': round(climate['sun_hour'].sum(), 4),
+            'humidity': round(climate['humidity'].sum(), 4),
+            'humidity_min': round(climate['humidity_min'].sum(), 4),
+        }]
         # get attribute columns
-        feature_selected.append(
+        return feature_selected
+
+    # get population response
+    def get_population_response(self, data0, data1):
+        # get attribute columns
+        feature_selected = [
             {
-                'vaporation': round(climate['vaporation'].sum(), 4),
-                'rain': round(climate['rain'].sum(), 4),
-                'max_rain': round(climate['max_rain'].sum(), 4),
-                'raining_day': round(climate['raining_day'].sum(), 4),
-                'temperature': round(climate['temperature'].sum(), 4),
-                'temperature_max': round(climate['temperature_max'].sum(), 4),
-                'temperature_min': round(climate['temperature_min'].sum(), 4),
-                'temperature_absolute_min': round(climate['temperature_abs_min'].sum(), 4),
-                'temperature_absolute_max': round(climate['temperature_abs_max'].sum(), 4),
-                'sun_hour': round(climate['sun_hour'].sum(), 4),
-                'humidity': round(climate['humidity'].sum(), 4),
-                'humidity_min': round(climate['humidity_min'].sum(), 4),
-            }
-        )
+                'name0': listToString(data0['province_name'].unique()),
+                'name1': listToString(data1['province_name'].unique()),
+                'population0': round(data0['population'].sum(), 4),
+                'population1': round(data1['population'].sum(), 4),
+            }]
         return feature_selected
 
     ############get database disease########
@@ -146,8 +140,7 @@ class GetData:
                     on a.province_code = b.province_code'''
         data = pd.read_sql_query(
             query, conn, index_col='date1', parse_dates=['date1'])
-        # self.cleaning_data(data, ['influenza', 'influenza_death', 'dengue_fever',
-        #                           'dengue_fever_death', 'diarrhoea', 'diarrhoea_death'])
+
         return data
 
     # get population data
@@ -173,7 +166,7 @@ class GetData:
                 '''
         population = pd.read_sql_query(query1, conn)
 
-        query2 = ''' select fips,date1,influenza,dengue_fever,diarrhoea,
+        query2 = ''' select fips,date1,year,influenza,dengue_fever,diarrhoea,
                     influenza_death,dengue_fever_death,diarrhoea_death
                     from disease as a
                     inner join
@@ -188,14 +181,14 @@ class GetData:
 
     def get_to_disease_mean(self):
         data = self.get_to_disease()
-        data = data[['influenza', 'influenza_death', 'dengue_fever',
+        data = data[['year', 'influenza', 'influenza_death', 'dengue_fever',
                      'dengue_fever_death', 'diarrhoea', 'diarrhoea_death']].resample('A').mean()
         return data
 
     # get disease max year
     def get_to_disease_max(self):
         data = self.get_to_disease()
-        data = data[['influenza', 'influenza_death', 'dengue_fever',
+        data = data[['year', 'influenza', 'influenza_death', 'dengue_fever',
                      'dengue_fever_death', 'diarrhoea', 'diarrhoea_death']].resample('A').max()
         return data
 
@@ -277,13 +270,13 @@ class GetData:
                 on a.province_code = b.province_code
                 where region =
                 ''' + str(region)
-        data = pd.read_sql_query(query, conn)
+        data = pd.read_sql_query(query, conn, index_col='date1', parse_dates=['date1'])
         return data
 
     # region disease + population
 
     def get_to_disease_population_region(self, region):
-        if (int(region) == 3):
+        if int(region) == 3:
             self.get_to_disease_population()
         else:
             query1 = '''select
@@ -312,7 +305,7 @@ class GetData:
 
     # region disease
     def get_to_disease_region(self, region):
-        if (int(region) == 3):
+        if int(region) == 3:
             query = ''' select year,month,date1,fips,
                     province_name,influenza,influenza_death,
                     dengue_fever_death,dengue_fever,
@@ -329,7 +322,7 @@ class GetData:
                         on a.province_code = b.province_code
                         where region = ''' + str(region)
 
-        data = pd.read_sql_query(query, conn)
+        data = pd.read_sql_query(query, conn, index_col='date1', parse_dates=['date1'])
 
         return data
 
@@ -391,7 +384,7 @@ class GetData:
                         a.temperature,a.temperature_max,
                         temperature_abs_max,temperature_abs_min,
                         a.temperature_min,a.humidity,a.humidity_min,
-                        a.sun_hour,date1
+                        a.sun_hour,date1,month
                         from climate as a
                         inner join province_info as b
                         on a.province_code = b.province_code
@@ -427,10 +420,23 @@ class GetData:
 
     # concat climate+disease
     def get_to_climate_disease(self):
-        climate = self.get_to_climate().reset_index()
-        disease = self.get_to_disease()
-        frame = [climate, disease]
-        data = pd.concat(frame, join='inner')
+        query1 = ''' select year,month,influenza,
+                            influenza_death,dengue_fever_death,dengue_fever,
+                            diarrhoea,diarrhoea_death,province_code as code,date1
+                            from disease'''
+        query2 = '''select province_code,vaporation,
+                                rain,max_rain,raining_day,
+                                temperature,temperature_max,
+                                temperature_min,temperature_abs_max,
+                                temperature_abs_min,
+                                humidity,humidity_min,sun_hour,date1
+                                from climate
+                                 '''
+        df1 = pd.read_sql_query(query1, conn)
+        df2 = pd.read_sql_query(query2, conn)
+        df = pd.concat([df2, df1], axis=1, join='inner')
+        df['raining_day'] = pd.to_numeric(df['raining_day'], errors='coerce')
+        return df
 
         return data
 

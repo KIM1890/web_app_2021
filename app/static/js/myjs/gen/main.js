@@ -140,7 +140,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`linechart_climate_${order}`, data, {});
-        $(`#climate_line_${order}`).html(`Yearly mean ${name.split('_').join('  ')} by year in Viet Nam from ${begin}-${end}`);
+        $(`#climate_line_${order}`).html(`Yearly mean ${name.split('_').join('  ')} by year, Viet Nam  ${begin}-${end}`);
       },
     });
     // heatmap Viet Nam
@@ -157,7 +157,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`heatmapclimate_${order}`, data, {});
-        $(`#climate_${order}`).html(`Distribution of yearly mean ${name.split('_').join('  ')} in Viet Nam from ${begin}-${end}`);
+        $(`#climate_${order}`).html(`Distribution of yearly mean ${name.split('_').join('  ')} in Viet Nam  ${begin}-${end}`);
       },
     });
     // chart date1 home
@@ -173,7 +173,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`linechart_climate_home_${order}`, data, {});
-        $(`#title_climate_home_${order}`).html(`Monthly mean ${name.split('_').join('  ')} in Viet Nam from ${begin}-${end}`);
+        $(`#title_climate_home_${order}`).html(`Monthly mean ${name.split('_').join('  ')} in Viet Nam  ${begin}-${end}`);
       },
     });
     create_tag_chart_climate(order, name);
@@ -196,7 +196,7 @@ $(document).ready(function () {
         Plotly.newPlot(`linechart_disease_${order}`, data, {});
         // incidence and death rates of influenza by monthly mean, Việt Nam,
         $(`#disease_line_${order}`).html(`Number case of ${name.split('_').join('  ')}
-          by yearly mean in Viet Nam from ${begin}-${end}`);
+          by yearly mean in Viet Nam  ${begin}-${end}`);
       },
     });
     // ajax heatmap disease
@@ -215,7 +215,7 @@ $(document).ready(function () {
         //Distribution of  influenza incidence rate by monthly mean in Viet
         // Nam, 1997-2016
         $(`#disease_${order}`).html(`Distribution of ${name.split('_').join('  ')}
-         by yearly mean in Viet Nam from ${begin}-${end}`);
+         by yearly mean in Viet Nam  ${begin}-${end}`);
       },
     });
     // line chart population
@@ -231,7 +231,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`linechart_pop_${order}`, data, {});
-        $(`#pop_line_${order}`).html(`Population by yearly mean in Viet Nam from ${begin}-${end}`);
+        $(`#pop_line_${order}`).html(`Yearly mean population by year in Viet Nam  ${begin}-${end}`);
       },
     });
     // ajax population
@@ -248,7 +248,7 @@ $(document).ready(function () {
         Plotly.newPlot(`heatmap_pop_${order}`, data, {});
         //Distribution of  influenza incidence rate by monthly mean in Viet
         // Nam, 1997-2016
-        $(`#pop_${order}`).html(`Distribution of population by yearly mean in Viet Nam from ${begin}-${end}`);
+        $(`#pop_${order}`).html(`Distribution of population by yearly mean in Viet Nam  ${begin}-${end}`);
       },
     });
     //   ajax case/population
@@ -264,8 +264,9 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`heatmap_ratio_${order}`, data, {});
-        $(`#ratio_${order}`).html(`Distribution rate of ${name.split('_').join('  ')}/population by yearly mean in Viet Nam
-         from ${begin}-${end}`);
+        $(`#ratio_${order}`).html(`Distribution rate of ${name.split('_').join('  ')}
+        /100000 by yearly mean in Viet Nam
+          ${begin}-${end}`);
       },
     });
     // ratio case/population
@@ -282,8 +283,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`linechart_ratio_${order}`, data, {});
-        // incidence and death rates of influenza by monthly mean, Việt Nam,
-        $(`#ratio_line_${order}`).html(`Rate of ${name.split('_').join('  ')}/population by yearly mean in Viet Nam from ${begin}-${end}`);
+        $(`#ratio_line_${order}`).html(`Rate of ${name.split('_').join('  ')}/100000 
+                    by yearly mean in Viet Nam  ${begin}-${end}`);
       },
     });
     // /date1_home_disease
@@ -300,7 +301,7 @@ $(document).ready(function () {
       success: function (data) {
         Plotly.newPlot(`linechart_date1_${order}`, data, {});
         // monthly mean influenza incidence
-        $(`#title_date1_home_${order}`).html(`Monthly mean ${name.split('_').join('  ')}  in Viet Nam from ${begin}-${end}`);
+        $(`#title_date1_home_${order}`).html(`Monthly mean ${name.split('_').join('  ')}  in Viet Nam  ${begin}-${end}`);
       },
     });
   };
@@ -813,7 +814,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`linechart_disease_${order}`, data, {});
-          $(`#disease_line_${order}`).html(`Number case of ${name.split('_').join('  ')} by yearly mean in Viet Nam from ${begin}-${end}`);
+          $(`#disease_line_${order}`).html(`Number case of ${name.split('_').join('  ')} by yearly mean in Viet Nam  ${begin}-${end}`);
         },
       });
       // heatmap region disease
@@ -830,7 +831,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`heatmapvn_${order}`, data, {});
-          $(`#disease_${order}`).html(`Distribution of ${name.split('_').join('  ')} by yearly mean in Viet Nam from ${begin}-${end}`);
+          $(`#disease_${order}`).html(`Distribution of ${name.split('_').join('  ')} by yearly mean in Viet Nam  ${begin}-${end}`);
         },
       });
       // heatmap population
@@ -846,7 +847,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`heatmap_pop_${order}`, data, {});
-          $(`#pop_${order}`).html(`Distribution of population by yearly mean in Viet Nam from ${begin}-${end}`);
+          $(`#pop_${order}`).html(`Distribution of population by yearly mean in Viet Nam  ${begin}-${end}`);
         },
       });
       // line chart population
@@ -862,7 +863,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`linechart_pop_${order}`, data, {});
-          $(`#pop_line_${order}`).html(`Population by yearly mean in Viet Nam from ${begin}-${end}`);
+          $(`#pop_line_${order}`).html(`Yearly mean population in Viet Nam  ${begin}-${end}`);
         },
       });
       // heatmap radio
@@ -879,8 +880,9 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`heatmap_ratio_${order}`, data, {});
-          $(`#ratio_${order}`).html(`Distribution rate of ${name.split('_').join('  ')}/population by yearly mean in Viet Nam
-          from ${begin}-${end}`);
+          $(`#ratio_${order}`).html(`Distribution rate of ${name.split('_').join('  ')}
+          /100000 by yearly mean in Viet Nam
+           ${begin}-${end}`);
         },
       });
       // line_chart_ratio
@@ -897,7 +899,8 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`linechart_ratio_${order}`, data, {});
-          $(`#ratio_line_${order}`).html(`Rate of ${name.split('_').join('  ')}/population by yearly mean in Viet Nam from ${begin}-${end}`);
+          $(`#ratio_line_${order}`).html(`Rate of ${name.split('_').join('  ')}/100000
+           by yearly mean in Viet Nam  ${begin}-${end}`);
         },
       });
       // /region_date1_disease_home
@@ -914,7 +917,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`linechart_date1_${order}`, data, {});
-          $(`#title_date1_home_${order}`).html(`Monthly mean ${name.split('_').join('  ')} incidence in Viet Nam from ${begin}-${end}`);
+          $(`#title_date1_home_${order}`).html(`Monthly mean ${name.split('_').join('  ')}  in Viet Nam from ${begin}-${end}`);
         },
       });
     });
@@ -1004,7 +1007,7 @@ $(document).ready(function () {
   // title home default
   title_home(1997, 2019);
   function title_home(begin, end) {
-    $('.title_home').html(`Summary Data In Viet Nam From ${begin}-${end}`)
+    $('.title_home').html(`Summary Disease Data In Viet Nam  ${begin}-${end}`)
   }
 });
 

@@ -305,7 +305,7 @@ $(document).ready(function () {
       success: function (data) {
         Plotly.newPlot(`lag_province_${order}`, data, {});
         // split(' ').join('');
-        $(`#lag_explore_${order}`).html(`Lag correlation of ${name.split('_').join(' ')} by monthly mean from ${begin}-${end}`);
+        $(`#lag_explore_${order}`).html(`Lag correlation of ${name.split('_').join(' ')} by monthly mean ${begin}-${end}`);
       },
     });
     // disease year province
@@ -322,7 +322,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`line_province_${order}`, data, {});
-        $(`#disease_explore_${order}`).html(`Number case of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#disease_explore_${order}`).html(`Number case of ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
       },
     });
     // disease month province
@@ -339,7 +339,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`line_province_month_${order}`, data, {});
-        $(`#disease_exp_month_${order}`).html(`Number case of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#disease_exp_month_${order}`).html(`Number case of ${name.split('_').join('  ')} by monthly mean ${begin}-${end}`);
       },
     });
     // seasonal analyst
@@ -356,7 +356,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`seasonal_disease_${order}`, data, {});
-        $(`#seasonal_${order}`).html(`Seasonal of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#seasonal_${order}`).html(`Seasonal of ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
       },
     });
     // correlation 
@@ -374,7 +374,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`corr_exp_${order}`, data, {});
-        $(`#title_corr_exp_${order}`).html(`Correlation of ${name.split('_').join('  ')} with climate and disease by yearly mean from ${begin}-${end}`);
+        $(`#title_corr_exp_${order}`).html(`Correlation of ${name.split('_').join('  ')} 
+        with climate and disease by yearly mean  ${begin}-${end}`);
       },
     });
     // date1 line chart 
@@ -391,7 +392,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`date1_disease_${order}`, data, {});
-        $(`#title_date1_${order}`).html(`Number case of ${name.split('_').join('  ')} by montly mean from ${begin}-${end}`);
+        $(`#title_date1_${order}`).html(`Number case of ${name.split('_').join('  ')} by monthly mean ${begin}-${end}`);
       },
     });
   };
@@ -412,7 +413,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`climate_explore_${order}`, data, {});
-        $(`#climate_exp_${order}`).html(`Number case of  ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#climate_exp_${order}`).html(`Number case of  ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
       },
     });
     // ajax heatmap climate
@@ -429,7 +430,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`climate_explore_month_${order}`, data, {});
-        $(`#climate_exp_month_${order}`).html(`Number case of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#climate_exp_month_${order}`).html(`Number case of ${name.split('_').join('  ')} by monthly mean  ${begin}-${end}`);
       },
     });
     // seasonal analyst
@@ -446,7 +447,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`seasonal_climate_${order}`, data, {});
-        $(`#seasonal_analyst_exp_${order}`).html(`Seasonal of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#seasonal_analyst_exp_${order}`).html(`Seasonal of ${name.split('_').join('  ')} by monthly mean  ${begin}-${end}`);
       },
     });
     // lag correlation
@@ -463,7 +464,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`lag_chart_climate_${order}`, data, {});
-        $(`#lag_climate_${order}`).html(`Lag correlation of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#lag_climate_${order}`).html(`Lag correlation of ${name.split('_').join('  ')} by monthly mean  ${begin}-${end}`);
       },
     });
     // line chart date1 
@@ -480,7 +481,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`line_date1_exp_${order}`, data, {});
-        $(`#title_date1_exp1_${order}`).html(`Number case of  ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#title_date1_exp1_${order}`).html(`Number case of  ${name.split('_').join('  ')} by monthly mean  ${begin}-${end}`);
       },
     });
   }
@@ -813,7 +814,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`line_province_${order}`, data, {});
-        $(`#disease_explore_${order}`).html(`Number case of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#disease_explore_${order}`).html(`Number case of ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
       },
     });
     // line month disease
@@ -830,7 +831,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`line_province_month_${order}`, data, {});
-        $(`#disease_exp_month_${order}`).html(`Number case of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#disease_exp_month_${order}`).html(`Number case of ${name.split('_').join('  ')} by monthly mean  ${begin}-${end}`);
       },
     });
     // seasonal analyst
@@ -847,7 +848,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`seasonal_disease_${order}`, data, {});
-        $(`#seasonal_${order}`).html(`Seasonal of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#seasonal_${order}`).html(`Seasonal of ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
       },
     });
     // lag disease region get tag province
@@ -864,7 +865,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`lag_province_${order}`, data, {});
-        $(`#lag_explore_${order}`).html(`Lag correlation of ${name.split('_').join(' ')} by monthly mean from ${begin}-${end}`);
+        $(`#lag_explore_${order}`).html(`Lag correlation of ${name.split('_').join(' ')} by monthly mean  ${begin}-${end}`);
       },
     });
     // line chart date1 
@@ -881,7 +882,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`date1_disease_${order}`, data, {});
-        $(`#title_date1_${order}`).html(`Number case of ${name.split('_').join('  ')} by montly mean from ${begin}-${end}`);
+        $(`#title_date1_${order}`).html(`Number case of ${name.split('_').join('  ')} by montly mean  ${begin}-${end}`);
       },
     });
     // correlation 
@@ -898,7 +899,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`corr_exp_${order}`, data, {});
-        $(`#title_corr_exp_${order}`).html(`Correlation of ${name.split('_').join('  ')} with climate and disease by yearly mean from ${begin}-${end}`);
+        $(`#title_corr_exp_${order}`).html(`Correlation of ${name.split('_').join('  ')} 
+        with climate and disease by yearly mean  ${begin}-${end}`);
       },
     });
   };
@@ -929,7 +931,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`climate_explore_${order}`, data, {});
-        $(`#climate_exp_${order}`).html(`Number case of  ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#climate_exp_${order}`).html(`Number case of  ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
       },
     });
     // chosen region month
@@ -946,7 +948,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`climate_explore_month_${order}`, data, {});
-        $(`#climate_exp_month_${order}`).html(`Number case of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#climate_exp_month_${order}`).html(`Number case of ${name.split('_').join('  ')} by monthly mean  ${begin}-${end}`);
       },
     });
     // seasonal analyst
@@ -963,7 +965,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`seasonal_climate_${order}`, data, {});
-        $(`#seasonal_analyst_exp_${order}`).html(`Seasonal of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#seasonal_analyst_exp_${order}`).html(`Seasonal of ${name.split('_').join('  ')} by monthly mean  ${begin}-${end}`);
       },
     });
     // lag correlation
@@ -980,7 +982,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`lag_chart_climate_${order}`, data, {});
-        $(`#lag_climate_${order}`).html(`Lag correlation of ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#lag_climate_${order}`).html(`Lag correlation of ${name.split('_').join('  ')} by monthly mean  ${begin}-${end}`);
       },
     });
     // line region 
@@ -997,7 +999,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`line_date1_exp_${order}`, data, {});
-        $(`#title_date1_exp1_${order}`).html(`Number case of  ${name.split('_').join('  ')} by monthly mean from ${begin}-${end}`);
+        $(`#title_date1_exp1_${order}`).html(`Number case of  ${name.split('_').join('  ')} by monthly mean  ${begin}-${end}`);
       },
     });
   };
@@ -1061,13 +1063,7 @@ $(document).ready(function () {
   function getData_Climate(id) {
     var begin = $(".begin").val();
     var end = $(".end").val();
-    // if (begin > end) {
-    //   $.alert({
-    //     title: 'Notification!',
-    //     content: 'Please chose begin year bigger than end year!',
-    //   });
-    //   return false;
-    // }
+
     $.ajax({
       type: "GET",
       url: "/exp_climate_response/" + id,
@@ -1109,13 +1105,7 @@ $(document).ready(function () {
   function getData_region_climate(id) {
     var begin = $(".begin").val();
     var end = $(".end").val();
-    // if (begin > end) {
-    //   $.alert({
-    //     title: 'Notification!',
-    //     content: 'Please chose begin year bigger than end year!',
-    //   });
-    //   return false;
-    // }
+
     $.ajax({
       type: "GET",
       url: "/explore_region_climate/" + id,
@@ -1174,7 +1164,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`corr_exp_${order}`, data, {});
-        $(`#title_corr_exp_${order}`).html(`Correlation of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#title_corr_exp_${order}`).html(`Correlation of ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
       },
     });
   }
@@ -1203,10 +1193,11 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         Plotly.newPlot(`corr_exp_${order}`, data, {});
-        $(`#title_corr_exp_${order}`).html(`Correlation of ${name.split('_').join('  ')} by yearly mean from ${begin}-${end}`);
+        $(`#title_corr_exp_${order}`).html(`Correlation of ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
       },
     });
   }
+  // run correlation
   function run_correlation_region(disease_climate = []) {
     var i = 0;
     var begin = $(".begin").val();
@@ -1217,9 +1208,9 @@ $(document).ready(function () {
       correlation_region(begin, end, value, i);
     });
   };
-
+  // title explore
   title_explore(1997, 2019);
   function title_explore(begin, end) {
-    $('.title_explore').html(`Explore Data In Viet Nam From ${begin}-${end}`)
+    $('.title_explore').html(`Explore Disease Data In Viet Nam  ${begin}-${end}`)
   }
 });

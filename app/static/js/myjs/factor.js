@@ -89,6 +89,7 @@ $(document).ready(function () {
         }
         chart_subplotly(disease);
     });
+
     function chart_subplotly(disease) {
         // check time 
         var begin = $(".begin").val();
@@ -108,7 +109,9 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 Plotly.newPlot(`subplotly_y`, data, {});
-                $(`#sub_title_year`).html(`Compare  ${disease.split('_').join('  ')} with climate by ${year_month}ly mean Viet Nam from ${begin}-${end}`);
+                $(`#sub_title_year`).html(`Compare  ${disease.split('_').join('  ')} with climate by 
+                ${year_month}ly mean Viet Nam 
+                 ${begin}-${end}`);
 
             },
         })
@@ -125,7 +128,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 Plotly.newPlot(`corr_compare`, data, {});
-                $(`#sub_corr_title`).html(`Correlation of ${disease.split('_').join('  ')} yearly mean Viet Nam from ${begin}-${end}`);
+                $(`#sub_corr_title`).html(`Correlation of ${disease.split('_').join('  ')} yearly mean Viet Nam  ${begin}-${end}`);
             },
         });
         // chart compare disease 
@@ -148,8 +151,9 @@ $(document).ready(function () {
     };
     chart_subplotly(disease);
     title_factor(1997, 2019);
+
     function title_factor(begin, end) {
-        $('.title_factor').html(` Explore Disease In Viet Nam From ${begin}-${end}`)
+        $('.title_factor').html(` Explore Disease Data In Viet Nam  ${begin}-${end}`)
     }
 
 });

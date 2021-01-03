@@ -6,6 +6,7 @@ import calendar
 import chart_studio.plotly as py
 import numpy as np
 from plotly.subplots import make_subplots
+from statsmodels.tsa.stattools import pacf, acf
 import plotly.express as px
 
 
@@ -34,7 +35,7 @@ class Visual:
         }
         for keys, values in dict_climate.items():
 
-            if (str(climate) == keys):
+            if str(climate) == keys:
                 dv = values
 
         return dv
@@ -57,9 +58,8 @@ class Visual:
 
     # beetween year
     def between_year(self, df, begin, end):
-        df['year'] = df.index.year
-        df = df[df['year'].between(int(begin), int(end))]
-        return df
+        mask = ((df.index.year >= int(begin)) & (df.index.year <= int(end)))
+        return df.loc[mask]
 
     ###################################################################
 
@@ -211,8 +211,14 @@ class Visual:
 
     def box_chart_feature(self, df, feature, begin, end):
         df = df[df['year'].between(int(begin), int(end))]
-        df = df.resample('M').mean()
-        fig = px.line(df, x=df.index, y=df[str(feature)], color=df.index.year)
+        df = df.resample('A').mean()
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=df.index.year,
+            y=df[str(feature)],
+            mode='lines',
+            line_color="rgb(189,189,189)"
+        ))
         dv = self.title_climate(str(feature))
         fig.update_layout(
             xaxis_title='Year', template="plotly_white",
@@ -225,8 +231,7 @@ class Visual:
     # heatmap disease Viet Nam
 
     def heatmap_vn(self, df, vn_json, disease, begin, end):
-        # map_vn = []
-        df = df[df['year'].between(int(begin), int(end))]
+        df = self.between_year(df, begin, end)
         mean = df.groupby(['fips', 'province_name']).mean().reset_index()
         # get data
         fig = go.Figure(go.Choroplethmapbox(geojson=vn_json, locations=mean['fips'], z=mean[str(disease)],
@@ -245,7 +250,7 @@ class Visual:
 
     def heatmap_population(self, df, vn_json, begin, end):
         # group by
-        df = df[df['year'].between(int(begin), int(end))]
+        df = self.between_year(df, begin, end)
         mean = df.groupby(['fips', 'province_name']).mean().reset_index()
         # map in here
         fig = go.Figure(go.Choroplethmapbox(
@@ -257,20 +262,18 @@ class Visual:
                           margin={"r": 20, "t": 20, "l": 20, "b": 20},
                           mapbox_center={"lat": 16.4, "lon": 107.683333333333})
 
-        PopuJson = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+        PopupJson = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-        return PopuJson
+        return PopupJson
 
     # line chart population
 
     def line_chart_population(self, df, begin, end):
 
-        df = df[df['year'].between(int(begin), int(end))]
-        # get mean
-        df = df.groupby('year').mean().reset_index()
+        df = self.between_year_mean(df, begin, end, 'A')
         fig = go.Figure()
         fig.add_trace(go.Scatter(
-            x=df['year'],
+            x=df.index,
             y=df['population'],
             mode='lines+markers', name="Population",
             marker_symbol='triangle-up', line_color="red",
@@ -312,7 +315,7 @@ class Visual:
 
     def heatmap_ratio(self, df, vn_json, disease, begin, end):
         # group by
-        df = df[df['year1'].between(int(begin), int(end))]
+        df = df[df['year'].between(int(begin), int(end))]
         mean = df.groupby(['fips', 'province_name']).mean().reset_index()
         # map in here
         fig = go.Figure(go.Choroplethmapbox(geojson=vn_json, locations=mean['fips'],
@@ -332,13 +335,12 @@ class Visual:
     # line chart ratio
 
     def line_chart_ratio(self, df, disease, begin, end):
-        df = df[df['year1'].between(int(begin), int(end))]
-        mean = df.groupby(['year1']).mean().reset_index()
+        df = df[df['year'].between(int(begin), int(end))]
+        mean = df.groupby(['year']).mean().reset_index()
         fig = go.Figure()
         fig.add_trace(go.Scatter(
-            x=mean['year1'],
-            # mean['population']
-            y=(mean[str(disease)] / (100000)),
+            x=mean.index,
+            y=(mean[str(disease)] / 100000),
             mode='lines+markers', marker_symbol='triangle-up', line_color="red"))
         fig.update_layout(
             updatemenus=[
@@ -376,7 +378,7 @@ class Visual:
     # heatmap climate
 
     def heatmap_climate(self, df, vn_json, climate, begin, end):
-        df = df[df['year'].between(int(begin), int(end))]
+        df = self.between_year(df, begin, end)
         mean = df.groupby(['fips', 'province_name']).mean().reset_index()
         fig = go.Figure(go.Choroplethmapbox(geojson=vn_json, locations=mean['fips'], z=mean[str(climate)],
                                             colorscale="Viridis", hovertext=mean['province_name'],
@@ -394,8 +396,7 @@ class Visual:
     # line chart region population tung vung mien
     def chart_region_population(self, df, begin, end):
         fig = go.Figure()
-        df = df[df['year'].between(int(begin), int(end))]
-        df = df.groupby('year').mean().reset_index()
+        df = self.between_year_mean(df, begin, end)
         fig.add_trace(go.Scatter(
             x=df['year'],
             y=df['population'],
@@ -438,11 +439,10 @@ class Visual:
 
     def chart_region_ratio(self, df, disease, begin, end):
         fig = go.Figure()
-        df = df[df['year1'].between(int(begin), int(end))]
-        df = df.groupby('year1').mean().reset_index()
+        df = self.between_year_mean(df, begin, end)
         fig.add_trace(go.Scatter(
             x=df['year1'],
-            y=(df[str(disease)] / (100000)),
+            y=(df[str(disease)] / 100000),
             line_color="red",
             mode='lines+markers', marker_symbol='triangle-up'))
         fig.update_layout(
@@ -872,6 +872,7 @@ class Visual:
 
     def seasonal_disease_exp(self, df, disease, begin, end):
         fig = go.Figure()
+        df = df.groupby(['month', 'year']).mean().reset_index()
         df['month'] = df['month'].apply(lambda x: calendar.month_abbr[x])
         year = [y for y in range(int(begin), int(end) + 1)]
         for y in year:
@@ -883,7 +884,6 @@ class Visual:
                                      name=str(y),
                                      ))
         fig.update_layout(xaxis_title='Month', template="plotly_white",
-                          # width=450, height=300,
                           margin=dict(l=20, r=20, t=20, b=20),
                           yaxis_title=(str(disease.replace('_', ' ')).title() + ' monthly mean'))
 
@@ -891,8 +891,10 @@ class Visual:
 
         return linesJSON
 
+    # seasonal climate
     def seasonal_climate_exp(self, df, climate, begin, end):
         fig = go.Figure()
+        df = df.groupby(['month', 'year']).mean().reset_index()
         df['month'] = df['month'].apply(lambda x: calendar.month_abbr[x])
 
         year = [y for y in range(int(begin), int(end) + 1)]
@@ -932,16 +934,20 @@ class Visual:
         line = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
         return line
 
+    # between_year()
+    def between_year_mean(self, df, begin, end, step):
+        df = df[df['year'].between(int(begin), int(end))]
+        # get mean
+        df = df.resample(step).mean()
+        return df
+
     # date1 disease province
 
     def line_date1_exp(self, df, disease, begin, end):
-        df = df[df['year'].between(int(begin), int(end))]
-        # get mean
-        df = df.groupby(['date1']).mean().reset_index()
-
+        df = self.between_year_mean(df, begin, end, 'A')
         # Create figure with secondary y-axis
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=df['date1'], y=df[str(disease)],
+        fig.add_trace(go.Scatter(x=df.index, y=df[str(disease)],
                                  mode='lines',
                                  line=dict(color='rgb(31, 119, 180)'),
                                  name=(str(disease.replace('_', ' '))).title()
@@ -984,13 +990,11 @@ class Visual:
     # date1 in climate
 
     def line_date1_climate_exp(self, df, climate, begin, end):
-        df = df[df['year'].between(int(begin), int(end))]
-        # get mean
-        df = df.groupby(['date1']).mean().reset_index()
+        df = self.between_year_mean(df, begin, end, 'A')
 
         # Create figure with secondary y-axis
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=df['date1'], y=df[str(climate)],
+        fig.add_trace(go.Scatter(x=df.index, y=df[str(climate)],
                                  mode='lines',
                                  line=dict(color='rgb(31, 119, 180)'),
                                  name=(str(climate.replace('_', ' ')).title())
@@ -1033,13 +1037,11 @@ class Visual:
     # region date1  disease
 
     def region_date1_exp(self, df, disease, begin, end):
-        df = df[df['year'].between(int(begin), int(end))]
-        # get mean
-        df = df.groupby(['date1']).mean().reset_index()
+        df = self.between_year_mean(df, begin, end, 'A')
 
         # Create figure with secondary y-axis
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=df['date1'], y=df[str(disease)],
+        fig.add_trace(go.Scatter(x=df.index, y=df[str(disease)],
                                  mode='lines',
                                  line=dict(color='rgb(31, 119, 180)'),
                                  name=str(disease)))
@@ -1080,13 +1082,11 @@ class Visual:
     # region climate data 1
 
     def region_date1_climate_exp(self, df, climate, begin, end):
-        df = df[df['year'].between(int(begin), int(end))]
-        # get mean
-        df = df.groupby(['date1']).mean().reset_index()
+        df = self.between_year_mean(df, begin, end, 'A')
 
         # Create figure with secondary y-axis
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=df['date1'], y=df[str(climate)],
+        fig.add_trace(go.Scatter(x=df.index, y=df[str(climate)],
                                  mode='lines',
                                  line=dict(color='rgb(31, 119, 180)'),
                                  name=str(climate)))
@@ -1131,7 +1131,8 @@ class Visual:
 
     def lag_correlation(self, df, feature, begin, end):
 
-        df = df[df['year'].between(int(begin), int(end))]
+        # df = df[df['year'].between(int(begin), int(end))]
+        df = self.between_year(df, begin, end)
         saw_auto = []
         saw_pauto = pacf(df[str(feature)], nlags=11)
         fig = go.Figure()
@@ -1154,6 +1155,7 @@ class Visual:
 
     def region_season_climate(self, df, climate, begin, end):
         fig = go.Figure()
+        df = df.groupby(['month', 'year']).mean().reset_index()
         df['month'] = df['month'].apply(lambda x: calendar.month_abbr[x])
         year = [y for y in range(int(begin), int(end) + 1)]
         for y in year:
@@ -1180,6 +1182,7 @@ class Visual:
 
     def region_season_disease(self, df, disease, begin, end):
         fig = go.Figure()
+        df = df.groupby(['month', 'year']).mean().reset_index()
         df['month'] = df['month'].apply(lambda x: calendar.month_abbr[x])
         year = [y for y in range(int(begin), int(end) + 1)]
         for y in year:
@@ -1213,24 +1216,25 @@ class Visual:
                                        "secondary_y": True}],
                                    [{"secondary_y": True}, {"secondary_y": True}]],
                             subplot_titles=(
-                            '<b> Monthly mean ' + str(feature) + ' and temperature' + '<br>' + str(begin) + '-' + str(
-                                end) + '</b>',
-                            '<b> Monthly mean ' +
-                            str(feature) + ' and rain' + '<br>' +
-                            str(begin) + '-' + str(end) + '</b>',
-                            '<b> Monthly mean incidence rates of ' +
-                            str(feature) + '<br>' +
-                            str(begin) + '-' + str(end) + '</b>',
-                            '<b> Monthly mean ' +
-                            str(feature) + ' and humidity' + '<br>' +
-                            str(begin) + '-' + str(end) + '</b>',
-                            # title in here
-                            '<b> Monthly mean ' + \
-                            str(feature) + ' and vaporation' + \
-                            '<br>' + str(begin) + '-' + \
-                            str(end) + '</b>',
-                            '<b> Monthly mean ' + str(feature) + ' and sun hour' + '<br>' + str(begin) + '-' + str(
-                                end) + '</b>'))
+                                '<b> Monthly mean ' + str(feature) + ' and temperature' + '<br>' + str(
+                                    begin) + '-' + str(
+                                    end) + '</b>',
+                                '<b> Monthly mean ' +
+                                str(feature) + ' and rain' + '<br>' +
+                                str(begin) + '-' + str(end) + '</b>',
+                                '<b> Monthly mean incidence rates of ' +
+                                str(feature) + '<br>' +
+                                str(begin) + '-' + str(end) + '</b>',
+                                '<b> Monthly mean ' +
+                                str(feature) + ' and humidity' + '<br>' +
+                                str(begin) + '-' + str(end) + '</b>',
+                                # title in here
+                                '<b> Monthly mean ' + \
+                                str(feature) + ' and vaporation' + \
+                                '<br>' + str(begin) + '-' + \
+                                str(end) + '</b>',
+                                '<b> Monthly mean ' + str(feature) + ' and sun hour' + '<br>' + str(begin) + '-' + str(
+                                    end) + '</b>'))
         # Create figure with secondary y-axis
 
         fig.add_trace(go.Scatter(x=df['month'], y=df[str(feature)], name=(str(feature).replace('_', ' ')).title(),

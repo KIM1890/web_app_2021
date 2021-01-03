@@ -4,40 +4,12 @@ from flask_assets import Bundle, Environment
 from app.plotly import visual_plotly as vp
 from app import app
 
-bundles = {
-    # js
-    'main_js': Bundle('js/myjs/home.js',
-                      'js/myjs/myscript.js',
-                      'js/myjs/explore.js',
-                      'js/myjs/compare.js',
-                      'js/myjs/factor.js',
-                      'js/myjs/predict.js',
-                      output='js/myjs/gen/main.js'),
-    'lib_js': Bundle(
-        'js/myjs/lib/jquery.min.js',
-        'js/myjs/lib/plotly-latest.min.js',
-        'js/myjs/lib/popper.js',
-        output='js/lib/gen/lib.js'),
-    # css
-    'main_css': Bundle('css/mycss/summary.css',
-                       'css/mycss/explore.css',
-                       'css/mycss/map.css',
-                       'css/mycss/compare.css',
-                       'css/mycss/mycss.css',
-                       'css/mycss/predict.css',
-                       output='css/mycss/gen/my_main.css'),
-    'lib_css': Bundle('css/mycss/lib/bootstrap.min.css',
-
-                      output='css/lib/gen/lib.css'),
-
-}
-assets = Environment(app)
-assets.register(bundles)
 # connect database
 query = models.GetData()
 visual = vp.Visual()
 # get data viet nam
 vn_json = query.read_json_vn()
+
 
 ##################################################
 def listToString(s):
@@ -48,15 +20,15 @@ def listToString(s):
 
 
 @app.route('/')
-def summary():
+def home():
     columns = query.get_columns()
     # get columns disease
     col_disease = columns['disease']
     # get columns climate
     col_climate = columns['climate1'].append(columns['climate2'].dropna())
-    # get columns climate 2
-    # climate2 = columns['climate2'].dropna()
+    # get data
     data = query.get_to_disease_mean()
+    # visual default
     barJson = visual.bar_chart_disease(data)
     barJsonDeath = visual.bar_chart_disease_death(data)
     return render_template('home.html',
@@ -71,7 +43,7 @@ def summary():
 
 
 @app.route("/summary_response", methods=['GET', 'POST'])
-def summary_response():
+def home_response():
     feature_selected = query.get_disease_response()
 
     return jsonify({'data': render_template('response_home.html',
@@ -277,8 +249,6 @@ def heatmap_climate():
 @app.route('/line_chart_climate', methods=['GET', 'POST'])
 def line_chart_climate():
     data = query.get_to_climate()
-    # df_max = query.read_climate_max()
-    # df_min = query.read_climate_min()
 
     climate = request.args['climate']
     begin = request.args['begin']
@@ -408,8 +378,7 @@ def explore():
     # name province
     province_name = query.get_province_name()
     province_code = query.get_province_code()
-    # province=zip(province_name, province_code)
-    # request data
+
     return render_template('explore.html',
                            col_disease=col_disease,
                            col_climate=col_climate,
@@ -490,6 +459,7 @@ def lag_correlation():
     begin = request.args['begin']
     end = request.args['end']
     province = request.args['province']
+    # get data
     data = query.get_to_disease_province(province)
     lag = visual.lag_correlation(data, disease, begin, end)
     return lag
@@ -504,6 +474,7 @@ def lag_region_disease():
     begin = request.args['begin']
     end = request.args['end']
     region = request.args['region']
+    # get data
     data = query.get_to_disease_region(region)
     lag = visual.lag_correlation(data, disease, begin, end)
     return lag
@@ -567,6 +538,7 @@ def province_disease_month():
     end = request.args['end']
     disease = request.args['disease']
 
+    # get data
     data = query.get_to_disease_province(province)
 
     LineJson = visual.stat_disease_month(data, disease, begin, end)
@@ -582,7 +554,7 @@ def seasonal_disease_exp():
     province = request.args['province']
     begin = request.args['begin']
     end = request.args['end']
-
+    # get data
     data = query.get_to_disease_province(province)
     seasonal = visual.seasonal_disease_exp(data, disease, begin, end)
 
@@ -668,8 +640,8 @@ def region_seasonal_climate():
 
     data = query.get_to_climate_disease_region(region)
 
-    linejson = visual.region_season_climate(data, climate, begin, end)
-    return linejson
+    linejoin = visual.region_season_climate(data, climate, begin, end)
+    return linejoin
 
 
 # correlation pages explore
@@ -682,6 +654,7 @@ def corr_disease_exp():
     begin = request.args['begin']
     end = request.args['end']
     province = request.args['province']
+    # get data
     data = query.get_to_disease_province(province)
     corr = visual.corr_disease_exp(data, disease, begin, end)
     return corr
@@ -697,7 +670,7 @@ def region_corr_disease_exp():
     begin = request.args['begin']
     end = request.args['end']
     region = request.args['region']
-
+    # get data
     data = query.get_to_climate_region(region)
     corr = visual.corr_disease_exp(data, disease, begin, end)
     return corr
@@ -712,6 +685,7 @@ def line_date1_exp():
     begin = request.args['begin']
     end = request.args['end']
     provice = request.args['province']
+    # get data
     data = query.get_to_disease_province(provice)
     line = visual.line_date1_exp(data, disease, begin, end)
     return line
@@ -741,6 +715,7 @@ def line_date1_climate_exp():
     begin = request.args['begin']
     end = request.args['end']
     provice = request.args['province']
+    # get data
     data = query.get_to_climate_province(provice)
     line = visual.line_date1_climate_exp(data, climate, begin, end)
     return line
@@ -859,24 +834,9 @@ def compare():
 
 @app.route("/popu_response/<id>/<id0>", methods=['GET', 'POST'])
 def popu_response(id, id0):
-    feature_selected = []
     data0 = query.get_to_pop_province(id)
     data1 = query.get_to_pop_province(id0)
-    begin = request.args['begin']
-    end = request.args['end']
-    # data0 = data0[data0['year'].between(int(begin), int(end))]
-    # data1 = data1[data1['year'].between(int(begin), int(end))]
-    # data0['province_name'] == '' ? 0 : data0['province_name']
-
-    # get attribute columns
-    feature_selected.append(
-        {
-            'name0': listToString(data0['province_name'].unique()),
-            'name1': listToString(data1['province_name'].unique()),
-            'population0': round(data0['population'].sum(), 4),
-            'population1': round(data1['population'].sum(), 4),
-        }
-    )
+    feature_selected = query.get_population_response(data0, data1)
 
     return jsonify({'data': render_template('popu_response.html',
                                             feature_selected=feature_selected)})
@@ -892,13 +852,12 @@ def factor():
         {'name': 'influenza'},
         {'name': 'dengue_fever'},
         {'name': 'diarrhoea'},
-        # {'name':'disease'}
     ]
 
     columns = query.get_columns()
     province_name = query.get_province_name()
     province_code = query.get_province_code()
-    return render_template('factor.html',
+    return render_template('disease.html',
                            disease_factor=disease_factor,
                            columns=columns,
                            province=zip(province_name, province_code)
@@ -924,11 +883,13 @@ def subplotly():
 
 @app.route('/subplotly_year', methods=['GET', 'POST'])
 def subplotly_year():
-    data = query.get_to_climate_disease()
+
     disease = request.args['disease']
     begin = request.args['begin']
     end = request.args['end']
     y_m = request.args['y_m']
+    # get data
+    data = query.get_to_climate_disease()
     sub = visual.compare_factor_year(data, disease, y_m, begin, end)
     return sub
 

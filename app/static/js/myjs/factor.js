@@ -144,7 +144,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 Plotly.newPlot(`comp_disease`, data, {});
-                $(`#comp_disease_title`).html(`Incidence and death of ${disease.split('_').join('  ')} by monthly mean Viet Nam from ${begin}-${end}`);
+                $(`#comp_disease_title`).html(`Incidence and death of ${disease.split('_').join('  ')} by monthly mean Viet Nam  ${begin}-${end}`);
 
             },
         });

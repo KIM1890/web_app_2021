@@ -917,7 +917,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`linechart_date1_${order}`, data, {});
-          $(`#title_date1_home_${order}`).html(`Monthly mean ${name.split('_').join('  ')}  in Viet Nam from ${begin}-${end}`);
+          $(`#title_date1_home_${order}`).html(`Monthly mean ${name.split('_').join('  ')}  in Viet Nam  ${begin}-${end}`);
         },
       });
     });
@@ -943,7 +943,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`linechart_climate_${order}`, data, {});
-          $(`#climate_line_${order}`).html(`Yearly mean ${name.split('_').join('  ')} by year in Viet Nam from ${begin}-${end}`);
+          $(`#climate_line_${order}`).html(`Yearly mean ${name.split('_').join('  ')} by year in Viet Nam  ${begin}-${end}`);
         },
       });
       // heatmap region disease
@@ -960,7 +960,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`heatmapclimate_${order}`, data, {});
-          $(`#climate_${order}`).html(`Distribution of yearly mean ${name.split('_').join('  ')} in Viet Nam from ${begin}-${end}`);
+          $(`#climate_${order}`).html(`Distribution of yearly mean ${name.split('_').join('  ')} in Viet Nam  ${begin}-${end}`);
         },
       });
       // region_date1_climate_home
@@ -977,7 +977,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
           Plotly.newPlot(`linechart_climate_home_${order}`, data, {});
-          $(`#title_climate_home_${order}`).html(`Monthly mean ${name.split('_').join('  ')} in Viet Nam from ${begin}-${end}`);
+          $(`#title_climate_home_${order}`).html(`Monthly mean ${name.split('_').join('  ')} in Viet Nam  ${begin}-${end}`);
         },
       });
     });

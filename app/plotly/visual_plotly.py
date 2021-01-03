@@ -739,7 +739,7 @@ class Visual:
                 showlegend=False
             ),
             go.Scatter(
-                name='Min' + str(climate),
+                name='Min ' + str(climate),
                 x=min_['year'],
                 y=min_[str(climate)],
                 marker=dict(color="#444"),
@@ -781,7 +781,7 @@ class Visual:
             xaxis_title='Year', template="plotly_white",
             margin=dict(l=30, r=30, b=30, t=30),
             yaxis_title=(str(climate.replace('_', ' ')).title()) +
-                        ' yearly mean' + str(dv)
+                        ' yearly ' +' '+str(dv)
         )
         linesJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
@@ -862,7 +862,7 @@ class Visual:
             xaxis_title='Month', template="plotly_white",
             margin=dict(l=30, r=30, b=30, t=30),
             yaxis_title=(str(climate.replace('_', ' ')).title()) +
-                        ' yearly mean' + str(dv)
+                        ' yearly   ' + str(dv)
         )
         linesJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 

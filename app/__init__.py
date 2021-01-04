@@ -1,10 +1,12 @@
-# import dash
-# import dash_bootstrap_components as dbc
+import dash
+import dash_bootstrap_components as dbc
 from flask import Flask
 from flask_assets import Bundle, Environment
 
 # dash
-app = Flask(__name__)
+# app = Flask(__name__)
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
 
 bundles = {
     # js
@@ -33,6 +35,6 @@ bundles = {
                       output='css/lib/gen/lib.css'),
 
 }
-assets = Environment(app)
+assets = Environment(server)
 assets.register(bundles)
 from app import routes

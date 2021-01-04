@@ -2,7 +2,9 @@ from flask import Flask, render_template, request, jsonify
 from app.database import models
 from flask_assets import Bundle, Environment
 from app.plotly import visual_plotly as vp
+import dash_html_components as html
 from app import app
+from app import server
 
 # connect database
 query = models.GetData()
@@ -10,7 +12,7 @@ visual = vp.Visual()
 # get data viet nam
 vn_json = query.read_json_vn()
 
-
+app.layout = html.Div(id='dash-container')
 ##################################################
 def listToString(s):
     str1 = " "
@@ -19,7 +21,7 @@ def listToString(s):
     return str1
 
 
-@app.route('/')
+@server.route('/home')
 def home():
     columns = query.get_columns()
     # get columns disease
@@ -42,7 +44,7 @@ def home():
 # response data home
 
 
-@app.route("/summary_response", methods=['GET', 'POST'])
+@server.route("/summary_response", methods=['GET', 'POST'])
 def home_response():
     feature_selected = query.get_disease_response()
 
@@ -53,7 +55,7 @@ def home_response():
 # data date1 home
 
 
-@app.route('/date1_home_disease', methods=['GET', 'POST'])
+@server.route('/date1_home_disease', methods=['GET', 'POST'])
 def date1_home_disease():
     disease = request.args['disease']
     begin = request.args['begin']
@@ -67,7 +69,7 @@ def date1_home_disease():
 # data disease date1 home region
 
 
-@app.route('/region_date1_disease_home', methods=['GET', 'POST'])
+@server.route('/region_date1_disease_home', methods=['GET', 'POST'])
 def region_date1_disease_home():
     disease = request.args['disease']
     begin = request.args['begin']
@@ -82,7 +84,7 @@ def region_date1_disease_home():
 # data date1 climate home
 
 
-@app.route('/date1_home_climate', methods=['GET', 'POST'])
+@server.route('/date1_home_climate', methods=['GET', 'POST'])
 def date1_home_climate():
     climate = request.args['climate']
     begin = request.args['begin']
@@ -96,7 +98,7 @@ def date1_home_climate():
 # region date1 climate
 
 
-@app.route('/region_date1_climate_home', methods=['GET', 'POST'])
+@server.route('/region_date1_climate_home', methods=['GET', 'POST'])
 def region_date1_climate_home():
     climate = request.args['climate']
     begin = request.args['begin']
@@ -111,7 +113,7 @@ def region_date1_climate_home():
 # disease ca nuoc heatmap VN
 
 
-@app.route('/heatmap_vn', methods=['GET', 'POST'])
+@server.route('/heatmap_vn', methods=['GET', 'POST'])
 def heatmap_vn():
     df = query.get_to_disease()
 
@@ -126,7 +128,7 @@ def heatmap_vn():
 # line chart disease ca nuoc
 
 
-@app.route('/line_chart_disease', methods=['GET', 'POST'])
+@server.route('/line_chart_disease', methods=['GET', 'POST'])
 def line_chart_disease():
     disease = request.args['disease']
     begin = request.args['begin']
@@ -142,7 +144,7 @@ def line_chart_disease():
 # population ca nuoc
 
 
-@app.route('/heatmap_population', methods=['GET', 'POST'])
+@server.route('/heatmap_population', methods=['GET', 'POST'])
 def heatmap_population():
     data = query.get_to_population()
 
@@ -157,7 +159,7 @@ def heatmap_population():
 # line chart population
 
 
-@app.route('/line_chart_population', methods=['GET', 'POST'])
+@server.route('/line_chart_population', methods=['GET', 'POST'])
 def line_chart_population():
     data = query.get_to_population()
 
@@ -172,7 +174,7 @@ def line_chart_population():
 # chart region population
 
 
-@app.route('/chart_region_population', methods=['GET', 'POST'])
+@server.route('/chart_region_population', methods=['GET', 'POST'])
 def chart_region_population():
     begin = request.args['begin']
     end = request.args['end']
@@ -186,7 +188,7 @@ def chart_region_population():
 # ratio disease/population ca nuoc
 
 
-@app.route('/heatmap_ratio', methods=['GET', 'POST'])
+@server.route('/heatmap_ratio', methods=['GET', 'POST'])
 def heatmap_ratio():
     data = query.get_to_disease_population()
 
@@ -201,7 +203,7 @@ def heatmap_ratio():
 # line chart ratio
 
 
-@app.route('/line_chart_ratio', methods=['GET', 'POST'])
+@server.route('/line_chart_ratio', methods=['GET', 'POST'])
 def line_chart_ratio():
     data = query.get_to_disease_population()
 
@@ -216,7 +218,7 @@ def line_chart_ratio():
 # line chart ratio region
 
 
-@app.route('/chart_region_ratio', methods=['GET', 'POST'])
+@server.route('/chart_region_ratio', methods=['GET', 'POST'])
 def chart_region_ratio():
     begin = request.args['begin']
     end = request.args['end']
@@ -231,7 +233,7 @@ def chart_region_ratio():
 # climate ca nuoc
 
 
-@app.route('/heatmap_climate', methods=['GET', 'POST'])
+@server.route('/heatmap_climate', methods=['GET', 'POST'])
 def heatmap_climate():
     data = query.get_to_climate()
 
@@ -246,7 +248,7 @@ def heatmap_climate():
 # line chart climate ca nuoc
 
 
-@app.route('/line_chart_climate', methods=['GET', 'POST'])
+@server.route('/line_chart_climate', methods=['GET', 'POST'])
 def line_chart_climate():
     data = query.get_to_climate()
 
@@ -264,7 +266,7 @@ def line_chart_climate():
 # line chart disease region tung vung mien
 
 
-@app.route('/line_chart_region_disease', methods=['GET', 'POST'])
+@server.route('/line_chart_region_disease', methods=['GET', 'POST'])
 def line_chart_region_disease():
     disease = request.args['disease']
     region = request.args['region']
@@ -283,7 +285,7 @@ def line_chart_region_disease():
 # line chart climate region tung vung mien
 
 
-@app.route('/line_chart_region_climate', methods=['GET', 'POST'])
+@server.route('/line_chart_region_climate', methods=['GET', 'POST'])
 def line_chart_region_climate():
     climate = request.args['climate']
     begin = request.args['begin']
@@ -300,7 +302,7 @@ def line_chart_region_climate():
 # heatmap climate region tung vung mien
 
 
-@app.route('/heatmap_climate_region', methods=['GET', 'POST'])
+@server.route('/heatmap_climate_region', methods=['GET', 'POST'])
 def heatmap_climate_region():
     climate = request.args['climate']
     begin = request.args['begin']
@@ -316,7 +318,7 @@ def heatmap_climate_region():
 # heatmap disease viet nam
 
 
-@app.route('/heatmap_vn_region', methods=['GET', 'POST'])
+@server.route('/heatmap_vn_region', methods=['GET', 'POST'])
 def heatmap_vn_region():
     disease = request.args['disease']
     region = request.args['region']
@@ -333,7 +335,7 @@ def heatmap_vn_region():
 # heatmap population
 
 
-@app.route('/heatmap_pop_region', methods=['GET', 'POST'])
+@server.route('/heatmap_pop_region', methods=['GET', 'POST'])
 def heatmap_pop_region():
     # disease = request.args['disease']
     region = request.args['region']
@@ -350,7 +352,7 @@ def heatmap_pop_region():
 # heatmap ratio
 
 
-@app.route('/heatmap_radio_region', methods=['GET', 'POST'])
+@server.route('/heatmap_radio_region', methods=['GET', 'POST'])
 def heatmap_radio_region():
     disease = request.args['disease']
     region = request.args['region']
@@ -367,7 +369,7 @@ def heatmap_radio_region():
 ########################### explorer pages#######################
 
 
-@app.route('/explore', methods=['GET', 'POST'])
+@server.route('/explore', methods=['GET', 'POST'])
 def explore():
     columns = query.get_columns()
     # get columns disease
@@ -389,7 +391,7 @@ def explore():
 # information province response
 
 
-@app.route("/explore_response/<id>")
+@server.route("/explore_response/<id>")
 def explore_response(id):
     data = query.get_to_pop_province(id)
     disease = query.get_to_disease_province(id)
@@ -406,7 +408,7 @@ def explore_response(id):
 # information province climate
 
 
-@app.route("/exp_climate_response/<id>", methods=['GET', 'POST'])
+@server.route("/exp_climate_response/<id>", methods=['GET', 'POST'])
 def exp_climate_response(id):
     climate = query.get_to_climate_province(id)
     begin = request.args['begin']
@@ -420,7 +422,7 @@ def exp_climate_response(id):
 # region disease response
 
 
-@app.route("/explore_response_region/<id>", methods=['GET', 'POST'])
+@server.route("/explore_response_region/<id>", methods=['GET', 'POST'])
 def explore_response_region(id):
     data = query.get_to_population_region(id)
     disease = query.get_to_disease_region(id)
@@ -436,7 +438,7 @@ def explore_response_region(id):
 # region climate response
 
 
-@app.route("/explore_region_climate/<id>", methods=['GET', 'POST'])
+@server.route("/explore_region_climate/<id>", methods=['GET', 'POST'])
 def explore_region_climate(id):
     climate = query.get_to_climate_region(id)
     begin = request.args['begin']
@@ -453,7 +455,7 @@ def explore_region_climate(id):
 # lag disease
 
 
-@app.route('/lag_correlation', methods=['GET', 'POST'])
+@server.route('/lag_correlation', methods=['GET', 'POST'])
 def lag_correlation():
     disease = request.args['disease']
     begin = request.args['begin']
@@ -468,7 +470,7 @@ def lag_correlation():
 # lag region disease
 
 
-@app.route('/lag_region_disease', methods=['GET', 'POST'])
+@server.route('/lag_region_disease', methods=['GET', 'POST'])
 def lag_region_disease():
     disease = request.args['disease']
     begin = request.args['begin']
@@ -483,7 +485,7 @@ def lag_region_disease():
 # lag climate correlation
 
 
-@app.route('/lag_climate_correlation', methods=['GET', 'POST'])
+@server.route('/lag_climate_correlation', methods=['GET', 'POST'])
 def lag_climate_correlation():
     climate = request.args['climate']
     begin = request.args['begin']
@@ -497,7 +499,7 @@ def lag_climate_correlation():
 # lag correlation region
 
 
-@app.route('/lag_region_climate', methods=['GET', 'POST'])
+@server.route('/lag_region_climate', methods=['GET', 'POST'])
 def lag_region_climate():
     climate = request.args['climate']
     begin = request.args['begin']
@@ -512,7 +514,7 @@ def lag_region_climate():
 # line chart disease for year
 
 
-@app.route('/line_province_disease_year', methods=['GET', 'POST'])
+@server.route('/line_province_disease_year', methods=['GET', 'POST'])
 def province_disease_year():
     province = request.args['province']
     begin = request.args['begin']
@@ -531,7 +533,7 @@ def province_disease_year():
 # chart disease month
 
 
-@app.route('/line_province_disease_month', methods=['GET', 'POST'])
+@server.route('/line_province_disease_month', methods=['GET', 'POST'])
 def province_disease_month():
     province = request.args['province']
     begin = request.args['begin']
@@ -548,7 +550,7 @@ def province_disease_month():
 # seasonal analyst
 
 
-@app.route('/seasonal_disease_exp', methods=['GET', 'POST'])
+@server.route('/seasonal_disease_exp', methods=['GET', 'POST'])
 def seasonal_disease_exp():
     disease = request.args['disease']
     province = request.args['province']
@@ -564,7 +566,7 @@ def seasonal_disease_exp():
 # seasonal disease
 
 
-@app.route('/region_seasonal_disease', methods=['GET', 'POST'])
+@server.route('/region_seasonal_disease', methods=['GET', 'POST'])
 def region_seasonal_disease():
     begin = request.args['begin']
     end = request.args['end']
@@ -580,7 +582,7 @@ def region_seasonal_disease():
 # climate year
 
 
-@app.route('/province_climate_year', methods=['GET', 'POST'])
+@server.route('/province_climate_year', methods=['GET', 'POST'])
 def province_climate_year():
     climate = request.args['climate']
     begin = request.args['begin']
@@ -598,7 +600,7 @@ def province_climate_year():
 # climate month
 
 
-@app.route('/province_climate_month', methods=['GET', 'POST'])
+@server.route('/province_climate_month', methods=['GET', 'POST'])
 def province_climate_month():
     climate = request.args['climate']
     begin = request.args['begin']
@@ -613,7 +615,7 @@ def province_climate_month():
 # seasonal analyst
 
 
-@app.route('/seasonal_climate_exp', methods=['GET', 'POST'])
+@server.route('/seasonal_climate_exp', methods=['GET', 'POST'])
 def seasonal_climate_exp():
     climate = request.args['climate']
     begin = request.args['begin']
@@ -631,7 +633,7 @@ def seasonal_climate_exp():
 # seasonal climate region
 
 
-@app.route('/region_seasonal_climate', methods=['GET', 'POST'])
+@server.route('/region_seasonal_climate', methods=['GET', 'POST'])
 def region_seasonal_climate():
     begin = request.args['begin']
     end = request.args['end']
@@ -647,7 +649,7 @@ def region_seasonal_climate():
 # correlation pages explore
 
 
-@app.route('/corr_disease_exp', methods=['GET', 'POST'])
+@server.route('/corr_disease_exp', methods=['GET', 'POST'])
 def corr_disease_exp():
     data = query.get_to_climate_disease()
     disease = request.args.getlist('disease[]')
@@ -663,7 +665,7 @@ def corr_disease_exp():
 # correlation region disease
 
 
-@app.route('/region_corr_disease_exp', methods=['GET', 'POST'])
+@server.route('/region_corr_disease_exp', methods=['GET', 'POST'])
 def region_corr_disease_exp():
     data = query.get_to_climate_disease()
     disease = request.args.getlist('disease[]')
@@ -679,7 +681,7 @@ def region_corr_disease_exp():
 # line chart date1
 
 
-@app.route('/line_date1_exp', methods=['GET', 'POST'])
+@server.route('/line_date1_exp', methods=['GET', 'POST'])
 def line_date1_exp():
     disease = request.args['disease']
     begin = request.args['begin']
@@ -694,7 +696,7 @@ def line_date1_exp():
 # date1 region
 
 
-@app.route('/date1_region_disease', methods=['GET', 'POST'])
+@server.route('/date1_region_disease', methods=['GET', 'POST'])
 def date1_region_disease():
     disease = request.args['disease']
     begin = request.args['begin']
@@ -709,7 +711,7 @@ def date1_region_disease():
 # line chart climate date1
 
 
-@app.route('/line_date1_climate_exp', methods=['GET', 'POST'])
+@server.route('/line_date1_climate_exp', methods=['GET', 'POST'])
 def line_date1_climate_exp():
     climate = request.args['climate']
     begin = request.args['begin']
@@ -724,7 +726,7 @@ def line_date1_climate_exp():
 # date1 climate
 
 
-@app.route('/region_date1_climate_exp', methods=['GET', 'POST'])
+@server.route('/region_date1_climate_exp', methods=['GET', 'POST'])
 def region_date1_climate_exp():
     # data = query.climate_disease()
     climate = request.args['climate']
@@ -741,7 +743,7 @@ def region_date1_climate_exp():
 # region disease year
 
 
-@app.route('/region_disease_year', methods=['GET', 'POST'])
+@server.route('/region_disease_year', methods=['GET', 'POST'])
 def region_disease_year():
     begin = request.args['begin']
     end = request.args['end']
@@ -760,7 +762,7 @@ def region_disease_year():
 # region disease month
 
 
-@app.route('/region_disease_month', methods=['GET', 'POST'])
+@server.route('/region_disease_month', methods=['GET', 'POST'])
 def region_disease_month():
     begin = request.args['begin']
     end = request.args['end']
@@ -776,7 +778,7 @@ def region_disease_month():
 # region climate
 
 
-@app.route('/region_climate_year', methods=['GET', 'POST'])
+@server.route('/region_climate_year', methods=['GET', 'POST'])
 def region_climate_year():
     begin = request.args['begin']
     end = request.args['end']
@@ -794,7 +796,7 @@ def region_climate_year():
 # region climate month
 
 
-@app.route('/region_climate_month', methods=['GET', 'POST'])
+@server.route('/region_climate_month', methods=['GET', 'POST'])
 def region_climate_month():
     begin = request.args['begin']
     end = request.args['end']
@@ -810,7 +812,7 @@ def region_climate_month():
 ############################# comparation factor##############################
 
 
-@app.route('/compare')
+@server.route('/compare')
 def compare():
     columns = query.get_columns()
     # get columns disease
@@ -832,7 +834,7 @@ def compare():
 # population response
 
 
-@app.route("/popu_response/<id>/<id0>", methods=['GET', 'POST'])
+@server.route("/popu_response/<id>/<id0>", methods=['GET', 'POST'])
 def popu_response(id, id0):
     data0 = query.get_to_pop_province(id)
     data1 = query.get_to_pop_province(id0)
@@ -845,7 +847,7 @@ def popu_response(id, id0):
 # compare factor
 
 
-@app.route('/factor')
+@server.route('/factor')
 def factor():
     # get columns disease
     disease_factor = [
@@ -868,7 +870,7 @@ def factor():
 # show subplotly in here
 
 
-@app.route('/subplotly', methods=['GET', 'POST'])
+@server.route('/subplotly', methods=['GET', 'POST'])
 def subplotly():
     data = query.get_to_climate_disease()
     disease = request.args['disease']
@@ -881,7 +883,7 @@ def subplotly():
 # show subplotly year in here
 
 
-@app.route('/subplotly_year', methods=['GET', 'POST'])
+@server.route('/subplotly_year', methods=['GET', 'POST'])
 def subplotly_year():
 
     disease = request.args['disease']
@@ -897,7 +899,7 @@ def subplotly_year():
 # correlation
 
 
-@app.route('/corr_factor', methods=['GET', 'POST'])
+@server.route('/corr_factor', methods=['GET', 'POST'])
 def corr_factor():
     data = query.get_to_climate_disease()
     disease = request.args['disease']
@@ -910,7 +912,7 @@ def corr_factor():
 ###########################comparation two province disease#############################
 
 
-@app.route('/compare_province', methods=['GET', 'POST'])
+@server.route('/compare_province', methods=['GET', 'POST'])
 def compare_province():
     disease = request.args['disease']
     province1 = request.args['province1']
@@ -927,7 +929,7 @@ def compare_province():
 # compare province month disease
 
 
-@app.route('/compare_pro_month', methods=['GET', 'POST'])
+@server.route('/compare_pro_month', methods=['GET', 'POST'])
 def compare_pro_month():
     disease = request.args['disease']
     province1 = request.args['province1']
@@ -944,7 +946,7 @@ def compare_pro_month():
 # comparation two province climate
 
 
-@app.route('/compare_pro_climate', methods=['GET', 'POST'])
+@server.route('/compare_pro_climate', methods=['GET', 'POST'])
 def compare_pro_climate():
     climate = request.args['climate']
     province1 = request.args['province1']
@@ -961,7 +963,7 @@ def compare_pro_climate():
 # compare two province climate month
 
 
-@app.route('/compare_pro_climate_month', methods=['GET', 'POST'])
+@server.route('/compare_pro_climate_month', methods=['GET', 'POST'])
 def compare_pro_climate_month():
     climate = request.args['climate']
     province1 = request.args['province1']
@@ -978,7 +980,7 @@ def compare_pro_climate_month():
 # pie chart in here
 
 
-@app.route('/pie_disease_year', methods=['GET', 'POST'])
+@server.route('/pie_disease_year', methods=['GET', 'POST'])
 def pie_disease_year():
     disease = request.args['disease']
     province1 = request.args['province1']
@@ -995,7 +997,7 @@ def pie_disease_year():
 # climate chart in here
 
 
-@app.route('/pie_climate_year', methods=['GET', 'POST'])
+@server.route('/pie_climate_year', methods=['GET', 'POST'])
 def pie_climate_month():
     climate = request.args['climate']
     province1 = request.args['province1']
@@ -1012,7 +1014,7 @@ def pie_climate_month():
 # compare disease
 
 
-@app.route('/compare_disease', methods=['GET', 'POST'])
+@server.route('/compare_disease', methods=['GET', 'POST'])
 def compare_disease():
     disease = request.args['disease']
     begin = request.args['begin']
@@ -1025,7 +1027,7 @@ def compare_disease():
 # compare 2 province date1
 
 
-@app.route('/comp_date1_disease', methods=['GET', 'POST'])
+@server.route('/comp_date1_disease', methods=['GET', 'POST'])
 def comp_date1_disease():
     disease = request.args['disease']
     province1 = request.args['province1']
@@ -1041,7 +1043,7 @@ def comp_date1_disease():
 # line chart climate date1
 
 
-@app.route('/comp_date1_climate', methods=['GET', 'POST'])
+@server.route('/comp_date1_climate', methods=['GET', 'POST'])
 def comp_date1_climate():
     climate = request.args['climate']
     province1 = request.args['province1']
@@ -1057,7 +1059,7 @@ def comp_date1_climate():
 #  linear chart disease
 
 
-@app.route('/linear_comp_year', methods=['GET', 'POST'])
+@server.route('/linear_comp_year', methods=['GET', 'POST'])
 def linear_comp_year():
     disease = request.args['disease']
     province1 = request.args['province1']
@@ -1073,7 +1075,7 @@ def linear_comp_year():
 #  linear chart disease  month
 
 
-@app.route('/linear_comp_month', methods=['GET', 'POST'])
+@server.route('/linear_comp_month', methods=['GET', 'POST'])
 def linear_comp_month():
     disease = request.args['disease']
     province1 = request.args['province1']
@@ -1089,7 +1091,7 @@ def linear_comp_month():
 # linear climate year
 
 
-@app.route('/linear_climate_year', methods=['GET', 'POST'])
+@server.route('/linear_climate_year', methods=['GET', 'POST'])
 def linear_climate_year():
     climate = request.args['climate']
     province1 = request.args['province1']
@@ -1105,7 +1107,7 @@ def linear_climate_year():
 # linear climate month
 
 
-@app.route('/linear_climate_month', methods=['GET', 'POST'])
+@server.route('/linear_climate_month', methods=['GET', 'POST'])
 def linear_climate_month():
     climate = request.args['climate']
     province1 = request.args['province1']

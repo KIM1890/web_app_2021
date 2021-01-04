@@ -1,7 +1,7 @@
 $(document).ready(function () {
   // timeseries begin and year
   let currentURL = $(location).attr('pathname');
-  if (currentURL != '/') {
+  if (currentURL != '/home') {
     return false;
   }
   $(".begin").change(function () {

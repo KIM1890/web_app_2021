@@ -81,14 +81,14 @@ def validating_Forecasts_plot(y, pred, pred_ci, code, disease, date_pre, year):
     pred = pred.predicted_mean
     fig = go.Figure([
         go.Scatter(
-            name='Measurement',
+            name='observed',
             x=ax.index,
             y=ax.values,
             mode='lines',
             line=dict(color='rgb(31, 119, 180)'),
         ),
         go.Scatter(
-            name='Measurement',
+            name='Static Forecast',
             x=pred.index,
             y=pred.values,
             mode='lines',
@@ -116,9 +116,12 @@ def validating_Forecasts_plot(y, pred, pred_ci, code, disease, date_pre, year):
         )
     ])
     fig.update_layout(
-        yaxis_title='Wind speed (m/s)',
-        title='Continuous, variable value error bars',
-        hovermode="x"
+        yaxis_title=str(disease),
+        xaxis_title='Date',
+        title='Validating Forecasts',
+        hovermode="x",
+        width=700,
+        height=500,
     )
     return fig
 
@@ -128,14 +131,14 @@ def forecasts_steps_plot(y, pred_uc, pred_ci, code, disease, date_pre, year):
     pred_uc = pred_uc.predicted_mean
     fig = go.Figure([
         go.Scatter(
-            name='Measurement',
+            name='observed',
             x=y.index,
             y=y.values,
             mode='lines',
             line=dict(color='rgb(31, 119, 180)'),
         ),
         go.Scatter(
-            name='Measurement',
+            name='Forecast',
             x=pred_uc.index,
             y=pred_uc.values,
             mode='lines',
@@ -163,14 +166,18 @@ def forecasts_steps_plot(y, pred_uc, pred_ci, code, disease, date_pre, year):
         )
     ])
     fig.update_layout(
-        yaxis_title='Wind speed (m/s)',
-        title='Continuous, variable value error bars',
-        hovermode="x"
+        yaxis_title=str(disease),
+        xaxis_title='Date',
+        title=' Producing and Visualizing Forecasts',
+        hovermode="x",
+        width=700,
+        height=500,
     )
     return fig
 
 
 # end training mo
+
 
 ##########################################################################
 def listToString(s):

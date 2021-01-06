@@ -129,7 +129,7 @@ def select_html():
                         html.B('Selected Timestep:'),
                         dcc.Slider(
                             id='my-slider',
-                            min=1,
+                            min=12,
                             max=500,
                             step=12,
                             value=12,

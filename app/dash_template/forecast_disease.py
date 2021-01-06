@@ -7,6 +7,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
+from flask import make_response, render_template_string
 from sklearn import linear_model, tree, neighbors
 from sklearn.metrics import mean_absolute_error
 import dash_bootstrap_components as dbc
@@ -108,18 +109,21 @@ layout = html.Div(
                     html.Div(
                         [
                             # summary data
+                            html.H4("Datasets of Viet Nam from 1997-2019", style={'color': 'orange'}),
                             html.Div(id='summary_data'),
-                            html.Br(),
-                            # summary table
+                            # summary models
                             html.Div(id='summary_models'),
-                            html.Br(),
-                            # fitting predict + actual
+                            html.Hr(),
+                            # validating predict + actual
                             html.Div([
                                 dcc.Graph(id='visual_fitting')
                             ], className='visual_fitting'),
+                            # The Mean Squared Error of our forecasts
+                            html.B(id='mse'),
                             # visual data
                             html.Div(id='example'),
                             # forcasting in the feature
+                            html.Hr(),
                             html.Div([
                                 dcc.Graph(id='Forecasts')
                             ], className='Forecasts'),
@@ -146,11 +150,21 @@ layout = html.Div(
     Input('disease_dropdown', 'value'),
 )
 def summary_models(code, disease):
-    df = query.read_csv_disease(code)
-    return list(df[[str(disease)]].describe())
+    y = query.read_csv_disease(code)
+
+    return html.P([
+        "Disease to forecasts: {}".format(str(disease)), html.Br(),
+        "Datasets Shape:                  {}".format(y[str(disease)].shape), html.Br(),
+        "Count:              {}".format(round(y[str(disease)].count()), html.Br(),
+                                        "Mean:              {}".format(round(y[str(disease)].mean(), 4)), html.Br(),
+                                        "STD: {}".format(y[str(disease)].std())), html.Br(),
+        "Min:                {}".format(y[str(disease)].min()), html.Br(),
+        'Max:                {}'.format(y[str(disease)].max()), html.Br()
+    ])
+
+    # training models
 
 
-# training models
 @app.callback(
     Output('summary_models', 'children'),
     Input('province_dropdown', 'value'),
@@ -191,8 +205,30 @@ def validating_Forecasts(code, disease, date_pre, year):
     pred = results.get_prediction(start=pd.to_datetime(date_pre), dynamic=False)
     pred_ci = pred.conf_int()
     fig = validating_Forecasts_plot(y, pred, pred_ci, code, disease, date_pre, year)
-    # y, pred, pred_ci, code, disease, date_pre, year
     return fig
+
+
+# The Mean Squared Error of our forecasts
+@app.callback(
+    Output('mse', 'children'),
+    Input('province_dropdown', 'value'),
+    Input('disease_dropdown', 'value'),
+    Input('slice-date', 'date'),
+    Input('year-slider', 'value'),
+)
+def MSE(code, disease, date_pre, year):
+    # get data
+    df = query.read_csv_disease(code)
+    y = df[str(disease)].resample('MS').mean()
+    y = y.fillna(y.bfill())
+    # end data
+    pred = results.get_prediction(start=pd.to_datetime(date_pre), dynamic=False)
+    y_forecasted = pred.predicted_mean
+    y_truth = y[str(date_pre):]
+
+    # Compute the mean square error
+    mse = ((y_forecasted - y_truth) ** 2).mean()
+    return 'The Mean Squared Error of our forecasts is: {}'.format(round(mse, 2))
 
 
 # forcast in the feature

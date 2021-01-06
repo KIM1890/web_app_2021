@@ -1,3 +1,5 @@
+import dash_core_components as dcc
+from dash.dependencies import Input, Output,State
 from flask import Flask, render_template, request, jsonify
 from app.database import models
 from flask_assets import Bundle, Environment
@@ -5,15 +7,39 @@ from app.plotly import visual_plotly as vp
 import dash_html_components as html
 from app import app
 from app import server
+from app.dash_template import forecast_disease, header
 
 # connect database
 query = models.GetData()
 visual = vp.Visual()
-# get data viet nam
+# get data viet nam to map
 vn_json = query.read_json_vn()
 
-app.layout = html.Div(id='dash-container')
+
+
+app.layout = html.Div([
+    dcc.Location(id='url', refresh=False),
+    html.Div([
+        header.header_html(),
+
+    ], className="row"),
+    html.Div(id='page-content', children=[])
+])
+
+
+@app.callback(Output('page-content', 'children'),
+              [Input('url', 'pathname')])
+def display_page(pathname):
+
+    if pathname == '/':
+        return forecast_disease.layout
+    elif pathname == '/home':
+        home()
+
+
+
 ##################################################
+
 def listToString(s):
     str1 = " "
     for ele in s:
@@ -21,6 +47,8 @@ def listToString(s):
     return str1
 
 
+
+# create route cho dash home
 @server.route('/home')
 def home():
     columns = query.get_columns()
@@ -885,7 +913,6 @@ def subplotly():
 
 @server.route('/subplotly_year', methods=['GET', 'POST'])
 def subplotly_year():
-
     disease = request.args['disease']
     begin = request.args['begin']
     end = request.args['end']

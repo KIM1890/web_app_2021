@@ -62,9 +62,16 @@ class GetData:
 
     # read file csv disease + climate
 
-    def get_to_disease_climate(self, province):
-        df = pd.read_csv(DATA_PATH.joinpath('disease_climate.csv'), parse_dates=['date1'], index_col='date1')
+    def get_to_disease_climate(self, code):
+        # df = pd.read_csv(DATA_PATH.joinpath('disease.csv'), parse_dates=['date1'], index_col='date1')
+        df = pd.read_csv(DATA_PATH.joinpath("disease_climate.csv"), parse_dates=['date1'], index_col='date1')
+        df = df[(df['province_code'] == code) & (df['year'].between(1997, 2016))]
+        return df
 
+    # read file csv disease from 1997-2019
+    def read_csv_disease(self, code):
+        df = pd.read_csv(DATA_PATH.joinpath("disease.csv"), parse_dates=['date1'], index_col='date1')
+        df = df[df['province_code'] == code]
         return df
 
     # read mean response disease summary data

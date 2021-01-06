@@ -3,11 +3,11 @@
         <div class="sidebar-header">
             <a href="/">
                 <!-- <div class="sidebar-brand-icon "> -->
-                <img src="/static/img/viruss.jpg" height="50px" width="60px" alt="logo" style="margin-top: 2%;">
+                <img src="/static/img/virus.png" height="50px" width="60px" alt="logo" style="margin-top: 2%;">
                 <!-- </div> -->
                 <div class="sidebar-brand-text mx-3">
                     <b>
-                        PANDEMIC
+                         EPIDEMIC
                     </b>
                 </div>
             </a>
@@ -16,7 +16,7 @@
         <div class="left-custom-menu-adp-wrap comment-scrollbar">
             <nav class="sidebar-nav left-sidebar-menu-pro">
                 <ul class="metismenu" id="menu1">
-                    <li class="text-center"><b class="text-dark">Select Filter</b></li>
+                    <li class="text-center"><b class="text-dark">Filter Box</b></li>
                     <hr>
                     <li class="text-center"><p class="text-dark">Select province</p></li>
                     <li class="text-center">
@@ -26,7 +26,7 @@
                             <option value="0" selected>Lai Châu</option>
                             <hr>
                             {% for name,code in province %}
-                                <option value="{{ code }}">{{ name }}</option>
+                                <option value="{{ code }}" data-target="{{ name }}">{{ name }}</option>
                             {% endfor %}
                         </select>
                     </li>

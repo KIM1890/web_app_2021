@@ -28,6 +28,15 @@ p = d = q = range(0, 2)
 pdq = list(itertools.product(p, d, q))
 
 
+# replace ky tu
+
+def replaceList(self, a):
+    arr = []
+    for elemt in a:
+        arr.append(elemt.replace('_', ' '))
+    return arr
+
+
 # pqd
 def pdq():
     p = d = q = range(0, 2)
@@ -109,26 +118,26 @@ def validating_Forecasts_plot(y, pred, pred_ci, code, disease, date_pre, start_y
             mode='lines',
             # line=dict(color='rgb(31, 119, 180)'),
         ),
-        go.Scatter(
-            name='Upper Bound',
-            x=pred_ci.index,
-            y=pred_ci.iloc[:, 0],
-            mode='lines',
-            marker=dict(color="#444"),
-            line=dict(width=0),
-            showlegend=False
-        ),
-        go.Scatter(
-            name='Lower Bound',
-            x=pred_ci.index,
-            y=pred_ci.iloc[:, 1],
-            marker=dict(color="#444"),
-            line=dict(width=0),
-            mode='lines',
-            fillcolor='rgba(68, 68, 68, 0.3)',
-            fill='tonexty',
-            showlegend=False
-        )
+        # go.Scatter(
+        #     name='Upper Bound',
+        #     x=pred_ci.index,
+        #     y=pred_ci.iloc[:, 0],
+        #     mode='lines',
+        #     marker=dict(color="#444"),
+        #     line=dict(width=0),
+        #     showlegend=False
+        # ),
+        # go.Scatter(
+        #     name='Lower Bound',
+        #     x=pred_ci.index,
+        #     y=pred_ci.iloc[:, 1],
+        #     marker=dict(color="#444"),
+        #     line=dict(width=0),
+        #     mode='lines',
+        #     fillcolor='rgba(68, 68, 68, 0.3)',
+        #     fill='tonexty',
+        #     showlegend=False
+        # )
     ])
     fig.update_layout(
         yaxis_title=str(disease),

@@ -32,6 +32,12 @@ def display_page(pathname):
         return forecast_disease.layout
     elif pathname == '/home':
         home()
+    elif pathname == '/explore':
+        explore()
+    elif pathname == '/factor':
+        factor()
+    elif pathname == '/compare':
+        compare_province()
 
 
 ##################################################
@@ -67,12 +73,12 @@ def home():
 # response data home
 
 
-@server.route("/summary_response", methods=['GET', 'POST'])
-def home_response():
-    feature_selected = query.get_disease_response()
-
-    return jsonify({'data': render_template('response_home.html',
-                                            feature_selected=feature_selected)})
+# @server.route("/summary_response", methods=['GET', 'POST'])
+# def home_response():
+#     feature_selected = query.get_disease_response()
+#
+#     return jsonify({'data': render_template('response_home.html',
+#                                             feature_selected=feature_selected)})
 
 
 # data date1 home
@@ -1048,7 +1054,8 @@ def compare_disease():
     disease = request.args['disease']
     begin = request.args['begin']
     end = request.args['end']
-    data = query.get_to_disease()
+    code = request.args['code']
+    data = query.get_to_disease_province(code)
     line = visual.compare_disease(data, disease, begin, end)
     return line
 

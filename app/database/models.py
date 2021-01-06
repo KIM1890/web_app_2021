@@ -94,10 +94,10 @@ class GetData:
 
         feature_selected = [{
             'name': listToString(data['province_name'].unique()),
-            'population': round(data['population'].sum(), 4),
-            'influenza': round(disease['influenza'].sum(), 4),
-            'diarrhoea': round(disease['diarrhoea'].sum(), 4),
-            'dengue': round(disease['dengue_fever'].sum(), 4)
+            'population': round(data['population'].mean(), 4),
+            'influenza': round(disease['influenza'].mean(), 4),
+            'diarrhoea': round(disease['diarrhoea'].mean(), 4),
+            'dengue': round(disease['dengue_fever'].mean(), 4)
 
         }]
         # get attribute columns
@@ -107,18 +107,18 @@ class GetData:
 
     def get_climate_response_exp(self, climate):
         feature_selected = [{
-            'vaporation': round(climate['vaporation'].sum(), 4),
-            'rain': round(climate['rain'].sum(), 4),
-            'max_rain': round(climate['max_rain'].sum(), 4),
-            'raining_day': round(climate['raining_day'].sum(), 4),
-            'temperature': round(climate['temperature'].sum(), 4),
-            'temperature_max': round(climate['temperature_max'].sum(), 4),
-            'temperature_min': round(climate['temperature_min'].sum(), 4),
-            'temperature_absolute_min': round(climate['temperature_abs_min'].sum(), 4),
-            'temperature_absolute_max': round(climate['temperature_abs_max'].sum(), 4),
-            'sun_hour': round(climate['sun_hour'].sum(), 4),
-            'humidity': round(climate['humidity'].sum(), 4),
-            'humidity_min': round(climate['humidity_min'].sum(), 4),
+            'vaporation': round(climate['vaporation'].mean(), 4),
+            'rain': round(climate['rain'].mean(), 4),
+            'max_rain': round(climate['max_rain'].mean(), 4),
+            'raining_day': round(climate['raining_day'].mean(), 4),
+            'temperature': round(climate['temperature'].mean(), 4),
+            'temperature_max': round(climate['temperature_max'].mean(), 4),
+            'temperature_min': round(climate['temperature_min'].mean(), 4),
+            'temperature_absolute_min': round(climate['temperature_abs_min'].mean(), 4),
+            'temperature_absolute_max': round(climate['temperature_abs_max'].mean(), 4),
+            'sun_hour': round(climate['sun_hour'].mean(), 4),
+            'humidity': round(climate['humidity'].mean(), 4),
+            'humidity_min': round(climate['humidity_min'].mean(), 4),
         }]
         # get attribute columns
         return feature_selected
@@ -130,8 +130,8 @@ class GetData:
             {
                 'name0': listToString(data0['province_name'].unique()),
                 'name1': listToString(data1['province_name'].unique()),
-                'population0': round(data0['population'].sum(), 4),
-                'population1': round(data1['population'].sum(), 4),
+                'population0': round(data0['population'].mean(), 4),
+                'population1': round(data1['population'].mean(), 4),
             }]
         return feature_selected
 

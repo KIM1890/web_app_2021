@@ -4,10 +4,15 @@ $(document).ready(function () {
     if (currentURL != '/factor') {
         return false;
     }
-    var province_code = '15';
-     $(".search_pro").change(function (event) {
+    let province_code = '15';
+    let begin = '1997'
+    let end = '2019'
+    let name = 'Lai Châu';
+    $(".search_pro").change(function (event) {
         province_code = $('#province').val();
+        name = $(this).find(':selected').attr('data-target');
         // call fuction
+        title_factor(begin, end);
         chart_subplotly(disease);
     });
     // begin
@@ -20,8 +25,8 @@ $(document).ready(function () {
         $(".indicator_begin").text(val);
         $(".indicator_begin").css("left", portion * ($(".begin").width() - 18));
         // correlation
-        var begin = $(".begin").val();
-        var end = $(".end").val();
+        begin = $(".begin").val();
+        end = $(".end").val();
         if (begin > end) {
             $.confirm({
                 title: 'Confirm',
@@ -54,8 +59,8 @@ $(document).ready(function () {
         $(".indicator_end").text(val);
         $(".indicator_end").css("left", portion * ($(".end").width() - 18));
 
-        var begin = $(".begin").val();
-        var end = $(".end").val();
+        begin = $(".begin").val();
+        end = $(".end").val();
         if (begin > end) {
             $.confirm({
                 title: 'Confirm',
@@ -104,7 +109,6 @@ $(document).ready(function () {
         // check time 
         var begin = $(".begin").val();
         var end = $(".end").val();
-        console.log(province_code);
         // subplotly year
         $.ajax({
             url: "/subplotly_year",
@@ -167,8 +171,7 @@ $(document).ready(function () {
     title_factor(1997, 2019);
 
     function title_factor(begin, end) {
-        $('.title_factor').html(` Explore Disease Data In Viet Nam  ${begin}-${end}`)
+        $('.title_factor').html(` Explore By Disease  In ${name}  ${begin}-${end}`)
     }
-
 
 });

@@ -18,11 +18,10 @@ from app.database.models import GetData
 from IPython.display import HTML
 # get path file
 import numpy as np
-import io
-import base64
-import matplotlib.pyplot as plt
-from app.plotly.train_models import models_SARIMA, validating_Forecasts_plot, \
-    forecasts_steps_plot, training_dataset
+from app.plotly.train_models import models_SARIMA, \
+    validating_Forecasts_plot, \
+    forecasts_steps_plot, \
+    training_dataset
 
 PATH = pathlib.Path(__file__).parent
 TEMPLATE_PATH = PATH.joinpath("../dash_template").resolve()
@@ -122,7 +121,7 @@ layout = html.Div(
                     html.Div(
                         [
                             # summary data
-                            html.Div(id='title_pred', style={'color': 'orange'}),
+                            html.Div(id='title_pred', style={'color': 'black'}),
                             html.Div(id='summary_data'),
                             # summary models
                             html.Div(id='summary_arima'),
@@ -274,21 +273,24 @@ def validating_Forecasts(code, disease, date_pre, values):
     Input('my-range-slider-year', 'value'),
 )
 def accurancy(code, disease, date_pre, values):
+    # date
+    start_year = values[0]
+    end_year = values[1]
     # get data
     df = query.read_csv_disease(code)
     y = df[str(disease)].resample('MS').mean()
     y = y.fillna(y.bfill())
+    y = y[(y.index.year >= start_year) & (y.index.year <= end_year)]
     # end data
     pred = results.get_prediction(start=pd.to_datetime(date_pre), dynamic=False)
     y_forecasted = pred.predicted_mean
     y_truth = y[str(date_pre):]
 
     # Compute the mean square error
-    # mse = ((y_forecasted - y_truth) ** 2).mean()
-    mse = mean_squared_error(y_truth, y_forecasted)
-    mae = mean_absolute_error(y_truth, y_forecasted)
+
+    mse = mean_squared_error(y_forecasted, y_truth)
+    mae = mean_absolute_error(y_forecasted, y_truth)
     rmse = np.sqrt(mse)
-    # return 'Mean Squared Error: {}'.format(round(mse, 2))
     return html.Div([
         html.Br(), "Mean squared error:       {}".format(round(mse, 2)), html.Br(),
         "Mean absolute error:              {}".format(round(mae, 2)), html.Br(),

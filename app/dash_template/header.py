@@ -23,7 +23,7 @@ def header_html():
                                 html.Li(
                                     [
                                         dbc.NavItem(
-                                            dbc.NavLink("Summary Data", href="/home"
+                                            dbc.NavLink("Summary Data", href="http://127.0.0.1:8050/home"
                                                         )),
                                         # code in here
                                     ]
@@ -33,9 +33,9 @@ def header_html():
                                     [
                                         dbc.DropdownMenu(
                                             [dbc.DropdownMenuItem('Explore Province',
-                                                                  href="/explore"),
+                                                                  href="http://127.0.0.1:8050/explore"),
                                              dbc.DropdownMenuItem("Explore Disease",
-                                                                  href="/factor")],
+                                                                  href="http://127.0.0.1:8050/factor")],
                                             label="Explore Data",
                                             # style={'color': 'white'},
                                             nav=True,
@@ -46,7 +46,7 @@ def header_html():
                                 html.Li(
                                     [
                                         dbc.NavItem(
-                                            dbc.NavLink("Compare Province", href="/compare"
+                                            dbc.NavLink("Compare Province", href="http://127.0.0.1:8050/compare"
                                                         )),
                                     ]
                                 ),

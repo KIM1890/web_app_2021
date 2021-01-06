@@ -2315,222 +2315,231 @@ $(document).ready(function () {
     title_explore(1997, 2019);
 
     function title_explore(begin, end) {
-        $name = '';
+        let $name = '';
         $("path").each(function (key, value) {
             $id = $(this).attr('id');
             if ($id == province_code) {
                 $name = $(this).data("original-title");
-                console.log($name);
             }
         })
         $('.title_explore').html(`Explore By Disease In ${$name}  ${begin}-${end}`)
     }
 });
 $(document).ready(function () {
-  let currentURL = $(location).attr('pathname');
-  if (currentURL != '/compare') {
-    return false;
-  }
-  $('[data-toggle="tooltip"]').tooltip();
-  // map prionce compare
-  var province_code = 15;
-  var count_click = 0;
-  var count_click_once = 0;
-  var count_click_twice = 0;
-  var id_click_twice = 25;
-  var id_click_once = 15;
-  // timeseries begin and year
-  $(".begin").on("input", function () {
-    var val = $(this).val();
-    var min = $(this).attr("min");
-    var max = $(this).attr("max");
-    var portion = (val - min) / (max - min);
-    $(".indicator_begin").text(val);
-    $(".indicator_begin").css("left", portion * ($(".begin").width() - 18));
-    // check time 
-    var begin = $(".begin").val();
-    var end = $(".end").val();
-    if (begin > end) {
-      $.confirm({
-        title: 'Confirm',
-        content: 'Please choose begin year bigger than or equal end year!',
-        iconClose: true,
-        buttons: {
-          ok: {
-            btnClass: 'btn-primay',
-            action: function () {
-              $(".begin").val(min);
-              $(".indicator_begin").text(min);
-              title_comp(min, end);
-              run_province_disease(disease_pro_array);
-              run_province_climate(climate_pro_array);
-            }
-          },
-        }
-      });
-      return false;
+    let currentURL = $(location).attr('pathname');
+    if (currentURL != '/compare') {
+        return false;
     }
-    title_comp(begin, end);
-    run_province_disease(disease_pro_array);
-    run_province_climate(climate_pro_array);
-    getData_comp(id_click_once, id_click_twice);
-  });
-  // end year
-  $(".end").on("input", function () {
-    var val = $(this).val();
-    var min = $(this).attr("min");
-    var max = $(this).attr("max");
-    var portion = (val - min) / (max - min);
-    $(".indicator_end").text(val);
-    $(".indicator_end").css("left", portion * ($(".end").width() - 18));
-
-    // check time 
-    var begin = $(".begin").val();
-    var end = $(".end").val();
-    if (begin > end) {
-      $.confirm({
-        title: 'Confirm',
-        content: 'Please choose begin year bigger than or equal end year!',
-        iconClose: true,
-        buttons: {
-          ok: {
-            btnClass: 'btn-primay',
-            action: function () {
-              $(".begin").val(min);
-              $(".indicator_begin").text(min);
-              title_comp(min, end);
-              run_province_disease(disease_pro_array);
-              run_province_climate(climate_pro_array);
-            }
-          },
+    $('[data-toggle="tooltip"]').tooltip();
+    // map prionce compare
+    var province_code = 15;
+    var count_click = 0;
+    var count_click_once = 0;
+    var count_click_twice = 0;
+    var id_click_twice = 25;
+    var id_click_once = 15;
+    // timeseries begin and year
+    $(".begin").on("input", function () {
+        var val = $(this).val();
+        var min = $(this).attr("min");
+        var max = $(this).attr("max");
+        var portion = (val - min) / (max - min);
+        $(".indicator_begin").text(val);
+        $(".indicator_begin").css("left", portion * ($(".begin").width() - 18));
+        // check time
+        var begin = $(".begin").val();
+        var end = $(".end").val();
+        if (begin > end) {
+            $.confirm({
+                title: 'Confirm',
+                content: 'Please choose begin year bigger than or equal end year!',
+                iconClose: true,
+                buttons: {
+                    ok: {
+                        btnClass: 'btn-primay',
+                        action: function () {
+                            $(".begin").val(min);
+                            $(".indicator_begin").text(min);
+                            title_comp(min, end);
+                            run_province_disease(disease_pro_array);
+                            run_province_climate(climate_pro_array);
+                        }
+                    },
+                }
+            });
+            return false;
         }
-      });
-      return false;
-    }
-    title_comp(begin, end);
-    run_province_disease(disease_pro_array);
-    run_province_climate(climate_pro_array);
-    getData_comp(id_click_once, id_click_twice);
-  });
+        title_comp(begin, end);
+        run_province_disease(disease_pro_array);
+        run_province_climate(climate_pro_array);
+        getData_comp(id_click_once, id_click_twice);
+    });
+    // end year
+    $(".end").on("input", function () {
+        var val = $(this).val();
+        var min = $(this).attr("min");
+        var max = $(this).attr("max");
+        var portion = (val - min) / (max - min);
+        $(".indicator_end").text(val);
+        $(".indicator_end").css("left", portion * ($(".end").width() - 18));
 
-  // run disease region
+        // check time
+        var begin = $(".begin").val();
+        var end = $(".end").val();
+        if (begin > end) {
+            $.confirm({
+                title: 'Confirm',
+                content: 'Please choose begin year bigger than or equal end year!',
+                iconClose: true,
+                buttons: {
+                    ok: {
+                        btnClass: 'btn-primay',
+                        action: function () {
+                            $(".begin").val(min);
+                            $(".indicator_begin").text(min);
+                            title_comp(min, end);
+                            run_province_disease(disease_pro_array);
+                            run_province_climate(climate_pro_array);
+                        }
+                    },
+                }
+            });
+            return false;
+        }
+        title_comp(begin, end);
+        run_province_disease(disease_pro_array);
+        run_province_climate(climate_pro_array);
+        getData_comp(id_click_once, id_click_twice);
+    });
 
-  // check disease
-  var disease_pro_array = [];
-  $(".check_disease").click(function () {
-    // check time 
-    var begin = $(".begin").val();
-    var end = $(".end").val();
+    // run disease region
 
-    if (this.checked) {
-      disease_pro_array.push(this.value);
-      if ((id_click_once == 0) & (id_click_twice == 0)) {
-        alert('Please choose province want compare');
-        return false;
-      }
-      run_province_disease(disease_pro_array);
-    } else {
-      disease_pro_array.pop(this.value);
-      unchecked_disease_pro(this.value);
-    };
-  });
+    // check disease
+    var disease_pro_array = [];
+    $(".check_disease").click(function () {
+        // check time
+        var begin = $(".begin").val();
+        var end = $(".end").val();
 
-  // check climate
-  var climate_pro_array = [];
-  $(".check_climate").click(function () {
-    // check time 
-    var begin = $(".begin").val();
-    var end = $(".end").val();
-
-    if (this.checked) {
-      climate_pro_array.push(this.value);
-      if ((id_click_once == 0) & (id_click_twice == 0)) {
-        alert('Please choose province want compare');
-        return false;
-      }
-      run_province_climate(climate_pro_array);
-    } else {
-      climate_pro_array.pop(this.value);
-      unchecked_climate_pro(this.value);
-    };
-  });
-  $("path").click(function (event) {
-    count_click++;
-    var check = $(this).data("check");
-    var id = $(this).attr("id");
-    // console.log(id);
-    if (check == "mapvn") {
-      exist_data_comp(id);
-      if (count_click % 2 == 0) {
-        $("path").each(function () {
-          var listid = $(this).attr("id");
-          if (listid == id) {
-            if (count_click_twice == 0) {
-              $(`#${id}`).css("fill", "orange");
-              id_click_twice = id;
-              count_click_twice++;
-              // check exist province code
-            } else {
-              $(`#${id_click_twice}`).css("fill", "#88a4bc");
-              click_event_twice_orange(id, 0);
-
+        if (this.checked) {
+            disease_pro_array.push(this.value);
+            if ((id_click_once == 0) & (id_click_twice == 0)) {
+                alert('Please choose province want compare');
+                return false;
             }
-          }
-        });
-      } else {
-        $("path").each(function () {
-          // run_province_disease(disease_pro_array);
-          var listid = $(this).attr("id");
-          if (listid == id) {
-            // show chart in here
-            // end show chart in here
-            if (count_click_once == 0) {
-              $('#15').css('fill', '#88a4bc');
-              $('#25').css('fill', '#88a4bc');
-              $(`#${id}`).css("fill", " #3b729f");
-              id_click_once = id;
-              count_click_once++;
-              // check exist province code
-            } else {
-              $(`#${id_click_once}`).css("fill", "#88a4bc");
-              click_event_once_green(id, 0);
-              // check exist province code
-            };
-          };
+            run_province_disease(disease_pro_array);
+        } else {
+            disease_pro_array.pop(this.value);
+            unchecked_disease_pro(this.value);
+        }
+        ;
+    });
 
-        });
-      };
-      if (count_click == 1) {
-        alert('Please choose province want compare');
-        return false;
-      }
-      getData_comp(id_click_once, id_click_twice);
-      run_province_disease(disease_pro_array);
-      run_province_climate(climate_pro_array);
-    };
-    // function green
-    function click_event_once_green(id, value_count) {
-      if (value_count == 0) {
-        $(`#${id}`).css("fill", " #3b729f");
-        id_click_once = id;
-        count_click_once++;
-      };
-    };
-    // end function green
-    // function orange
-    function click_event_twice_orange(id, value_count) {
-      if (value_count == 0) {
-        $(`#${id}`).css("fill", "orange");
-        id_click_twice = id;
-        count_click_twice++;
-      };
-    };
-    // end function orange
-  });
-  // create tag disease
-  function create_tag_climate(order, name) {
-    var html = '';
-    html += `<div class="courses-area mg-b-15" id='climate_comp_${name}'>
+    // check climate
+    var climate_pro_array = [];
+    $(".check_climate").click(function () {
+        // check time
+        var begin = $(".begin").val();
+        var end = $(".end").val();
+
+        if (this.checked) {
+            climate_pro_array.push(this.value);
+            if ((id_click_once == 0) & (id_click_twice == 0)) {
+                alert('Please choose province want compare');
+                return false;
+            }
+            run_province_climate(climate_pro_array);
+        } else {
+            climate_pro_array.pop(this.value);
+            unchecked_climate_pro(this.value);
+        }
+        ;
+    });
+    $("path").click(function (event) {
+        count_click++;
+        var check = $(this).data("check");
+        var id = $(this).attr("id");
+        // console.log(id);
+        if (check == "mapvn") {
+            exist_data_comp(id);
+            if (count_click % 2 == 0) {
+                $("path").each(function () {
+                    var listid = $(this).attr("id");
+                    if (listid == id) {
+                        if (count_click_twice == 0) {
+                            $(`#${id}`).css("fill", "orange");
+                            id_click_twice = id;
+                            count_click_twice++;
+                            // check exist province code
+                        } else {
+                            $(`#${id_click_twice}`).css("fill", "#88a4bc");
+                            click_event_twice_orange(id, 0);
+
+                        }
+                    }
+                });
+            } else {
+                $("path").each(function () {
+                    // run_province_disease(disease_pro_array);
+                    var listid = $(this).attr("id");
+                    if (listid == id) {
+                        // show chart in here
+                        // end show chart in here
+                        if (count_click_once == 0) {
+                            $('#15').css('fill', '#88a4bc');
+                            $('#25').css('fill', '#88a4bc');
+                            $(`#${id}`).css("fill", " #3b729f");
+                            id_click_once = id;
+                            count_click_once++;
+                            // check exist province code
+                        } else {
+                            $(`#${id_click_once}`).css("fill", "#88a4bc");
+                            click_event_once_green(id, 0);
+                            // check exist province code
+                        }
+                        ;
+                    }
+                    ;
+
+                });
+            }
+            ;
+            if (count_click == 1) {
+                alert('Please choose province want compare');
+                return false;
+            }
+            getData_comp(id_click_once, id_click_twice);
+            run_province_disease(disease_pro_array);
+            run_province_climate(climate_pro_array);
+        }
+        ;
+
+        // function green
+        function click_event_once_green(id, value_count) {
+            if (value_count == 0) {
+                $(`#${id}`).css("fill", " #3b729f");
+                id_click_once = id;
+                count_click_once++;
+            }
+            ;
+        };
+        // end function green
+        // function orange
+        function click_event_twice_orange(id, value_count) {
+            if (value_count == 0) {
+                $(`#${id}`).css("fill", "orange");
+                id_click_twice = id;
+                count_click_twice++;
+            }
+            ;
+        };
+        // end function orange
+    });
+
+    // create tag disease
+    function create_tag_climate(order, name) {
+        var html = '';
+        html += `<div class="courses-area mg-b-15" id='climate_comp_${name}'>
     <div class="container-fluid">
         <div class="row">
             <!-- pie chart  -->
@@ -2622,15 +2631,16 @@ $(document).ready(function () {
 </div>
 <hr class="my-4" id=ruler_comp0_${name}>
 `;
-    $(".climate_comp").append(html);
-    $(`#climate_comp_${name},#date1_comp_${name},#ruler_comp0_${name},#linear_comp_climate_${name}`).each(function (i) {
-      $('[id="' + this.id + '"]').slice(1).remove();
-    });
-  };
-  // create tag climate
-  function create_tag_disease(order, name) {
-    var html = '';
-    html += `
+        $(".climate_comp").append(html);
+        $(`#climate_comp_${name}, #date1_comp_${name}, #ruler_comp0_${name}, #linear_comp_climate_${name}`).each(function (i) {
+            $('[id="' + this.id + '"]').slice(1).remove();
+        });
+    };
+
+    // create tag climate
+    function create_tag_disease(order, name) {
+        var html = '';
+        html += `
     <div class="courses-area mg-b-15" id='disease_comp_${name}'>
 	<div class="container-fluid">
 		<div class="row">
@@ -2723,335 +2733,344 @@ $(document).ready(function () {
 </div>
 <hr class="my-4" id=ruler_comp_${name}>
 `;
-    $(`.disease_comp`).append(html);
-    $(`#disease_comp_${name},#disease_date1_comp_${name},#ruler_comp_${name},#linear_comp_${name}`).each(function (i) {
-      $('[id="' + this.id + '"]').slice(1).remove();
-    });
-  };
-  // choosen province disease
-  function chosen_province_disease(begin, end, name, order) {
-    // pie chart year
-    create_tag_disease(order, name);
-    $.ajax({
-      url: "/pie_disease_year",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        disease: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`pie_disease_y_${order}`, data, {});
-        $(`#pie_disease_year_${order}`).html(`Number case of ${name.split('_').join('  ')} 
-        by yearly mean  ${begin}-${end}`);
-      },
-    });
-    // line year disease
-    $.ajax({
-      url: "/compare_province",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        disease: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`line_pro_year_${order}`, data, {});
-        $(`#title_pro_year_${order}`).html(`Number case of  ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
-      },
-    });
-    // line month disease
-    $.ajax({
-      url: "/compare_pro_month",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        disease: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`line_pro_month_${order}`, data, {});
-        $(`#title_pro_month_${order}`).html(`Number of  ${name.split('_').join('  ')} monthly mean  ${begin}-${end}`);
-      },
-    });
-    // disease_date1_comp_${order}
-    $.ajax({
-      url: "/comp_date1_disease",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        disease: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`disease_date1_comp_${order}`, data, {});
-        $(`#title_date1_comp_disease_${order}`).html(`Number case of  ${name.split('_').join('  ')} 
-        by monthly mean  ${begin}-${end}`);
-      },
-    });
-    // linear disease year
-    $.ajax({
-      url: "/linear_comp_year",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        disease: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`linear_disease_y_${order}`, data, {});
-        $(`#linear_disease_year_${order}`).html(`Linear of ${name.split('_').join('  ')} by yearly mean ${begin}-${end}`);
-      },
-    });
-    // linear disease month
-    $.ajax({
-      url: "/linear_comp_month",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        disease: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`linear_pro_month_${order}`, data, {});
-        $(`#linear_title_year_${order}`).html(`Linear of ${name.split('_').join('  ')} 
-        by monthly mean  ${begin}-${end}`);
-      },
-    });
-
-  };
-
-  // uncheck disease
-  function unchecked_disease_pro(name) {
-    $(`#disease_comp_${name}`).remove();
-    $(`#disease_date1_comp_${name}`).remove();
-    $(`#linear_comp_${name}`).remove();
-    $(`#ruler_comp_${name}`).attr('class', 'my-4 hidden');
-  };
-  // run disease
-  function run_province_disease(disease_pro_array = []) {
-    var i = 0;
-    var begin = $(".begin").val();
-    var end = $(".end").val();
-
-    $.each(disease_pro_array, function (index, value) {
-      i++;
-      chosen_province_disease(begin, end, value, i);
-    });
-  };
-  // choose province climate
-  function chosen_province_climate(begin, end, name, order) {
-    create_tag_climate(order, name);
-    // pie chart year climate
-    $.ajax({
-      url: "/pie_climate_year",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        climate: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`pie_climate_y_${order}`, data, {});
-        $(`#pie_climate_year_${order}`).html(`Number of ${name.split('_').join('  ')} 
-        by yearly mean  ${begin}-${end}`);
-      },
-    });
-    // line year climate
-    $.ajax({
-      url: "/compare_pro_climate",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        climate: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`climate_pro_y_${order}`, data, {});
-        $(`#climate_pro_year_${order}`).html(`Number of ${name.split('_').join('  ')} 
-        by yearly mean  ${begin}-${end}`);
-      },
-    });
-    // line month climate
-    $.ajax({
-      url: "/compare_pro_climate_month",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        climate: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`climate_pro_m_${order}`, data, {});
-        $(`#climate_pro_month_${order}`).html(`Number of ${name.split('_').join('  ')} 
-        by monthly mean  ${begin}-${end}`);
-      },
-    });
-    // date1 climate 
-    // line month climate
-    $.ajax({
-      url: "/comp_date1_climate",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        climate: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`climate_date1_comp_${order}`, data, {});
-        $(`#title_date1_comp_${order}`).html(`Number of ${name.split('_').join('  ')} monthly mean 
-         ${begin}-${end}`);
-      },
-    });
-    // linear year climate
-    $.ajax({
-      url: "/linear_climate_year",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        climate: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`linear_climate_y_${order}`, data, {});
-        $(`#linear_climate_year_${order}`).html(`Linear of ${name.split('_').join('  ')} 
-        by yearly mean  ${begin}-${end}`);
-      },
-    });
-    // linear_climate_month
-    $.ajax({
-      url: "/linear_climate_month",
-      type: "GET",
-      contentType: "application/json;charset=UTF-8",
-      data: {
-        climate: name,
-        begin: begin,
-        end: end,
-        province1: id_click_once,
-        province2: id_click_twice,
-      },
-      dataType: "json",
-      success: function (data) {
-        Plotly.newPlot(`linear_climate_month_${order}`, data, {});
-        $(`#linear_title_month_${order}`).html(`Linear of ${name.split('_').join('  ')} 
-        by monthly mean  ${begin}-${end}`);
-      },
-    });
-  };
-  // uncheck climate
-  function unchecked_climate_pro(name) {
-    $(`#climate_comp_${name}`).remove();
-    $(`#date1_comp_${name}`).remove();
-    $(`#linear_comp_climate_${name}`).remove();
-    $(`#ruler_comp0_${name}`).attr('class', 'my-4 hidden');
-  };
-  // run province climate
-  function run_province_climate(climate_pro_array = []) {
-    var i = 0;
-    var begin = $(".begin").val();
-    var end = $(".end").val();
-
-    $.each(climate_pro_array, function (index, value) {
-      i++;
-      chosen_province_climate(begin, end, value, i);
-    });
-  };
-  // end choose province climate
-  // check exist data in map Viet Nam
-  function exist_data_comp(id,) {
-    // id data province
-    var id_data = [15, 30, 27, 3, 29, 25, 16, 7, 31, 24, 4, 20, 13, 9, 8, 11, 6,
-      1, 10, 2, 17, 12, 19, 22, 23, 21, 38, 26, 45, 32, 49, 28, 40, 56,
-      42, 43, 61, 35, 41, 37, 55, 34, 57, 48, 36, 59, 60, 52, 62, 46, 39,
-      63, 51, 64, 54];
-    if ((id_data.includes(parseInt(id))) == false) {
-      $.confirm({
-        title: "Compare Province",
-        content: "Data not exist.Please choose another province to compare!",
-        buttons: {
-          ok: {
-            btnClas: "btn-primary",
-          },
-          cancel: {
-            btnClass: "btn-danger",
-          },
-        },
-      });
-      // $(`#${id}`).css("fill", "#ddddbb");
-      return false;
+        $(`.disease_comp`).append(html);
+        $(`#disease_comp_${name}, #disease_date1_comp_${name}, #ruler_comp_${name}, #linear_comp_${name}`).each(function (i) {
+            $('[id="' + this.id + '"]').slice(1).remove();
+        });
     };
-  };
-  // ajax in here 
-  getData_comp(id_click_once, id_click_twice);
-  function getData_comp(id, id0) {
-    var begin = $(".begin").val();
-    var end = $(".end").val();
 
-    $.ajax({
-      type: "GET",
-      url: "/popu_response/" + id + '/' + id0,
-      success: function (response) {
-        $(".showresult_popu").html(response.data);
+    // choosen province disease
+    function chosen_province_disease(begin, end, name, order) {
+        // pie chart year
+        create_tag_disease(order, name);
+        $.ajax({
+            url: "/pie_disease_year",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                disease: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`pie_disease_y_${order}`, data, {});
+                $(`#pie_disease_year_${order}`).html(`Number case of ${name.split('_').join('  ')} 
+        by yearly mean  ${begin}-${end}`);
+            },
+        });
+        // line year disease
+        $.ajax({
+            url: "/compare_province",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                disease: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`line_pro_year_${order}`, data, {});
+                $(`#title_pro_year_${order}`).html(`Number case of  ${name.split('_').join('  ')} by yearly mean  ${begin}-${end}`);
+            },
+        });
+        // line month disease
+        $.ajax({
+            url: "/compare_pro_month",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                disease: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`line_pro_month_${order}`, data, {});
+                $(`#title_pro_month_${order}`).html(`Number of  ${name.split('_').join('  ')} monthly mean  ${begin}-${end}`);
+            },
+        });
+        // disease_date1_comp_${order}
+        $.ajax({
+            url: "/comp_date1_disease",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                disease: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`disease_date1_comp_${order}`, data, {});
+                $(`#title_date1_comp_disease_${order}`).html(`Number case of  ${name.split('_').join('  ')} 
+        by monthly mean  ${begin}-${end}`);
+            },
+        });
+        // linear disease year
+        $.ajax({
+            url: "/linear_comp_year",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                disease: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`linear_disease_y_${order}`, data, {});
+                $(`#linear_disease_year_${order}`).html(`Linear of ${name.split('_').join('  ')} by yearly mean ${begin}-${end}`);
+            },
+        });
+        // linear disease month
+        $.ajax({
+            url: "/linear_comp_month",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                disease: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`linear_pro_month_${order}`, data, {});
+                $(`#linear_title_year_${order}`).html(`Linear of ${name.split('_').join('  ')} 
+        by monthly mean  ${begin}-${end}`);
+            },
+        });
 
-      },
-      data: {
-        begin: begin,
-        end: end,
-      },
-      error: function (response) {
-        console.log(response);
-      }
-    });
-  };
-  title_comp(1997, 2019);
-  function title_comp(begin, end) {
-    $('.title_comp').html(`Compare Disease Data In Viet Nam  ${begin}-${end}`)
-  }
-  $('.min_max').html(`(${begin}-${end})`)
+    };
+
+    // uncheck disease
+    function unchecked_disease_pro(name) {
+        $(`#disease_comp_${name}`).remove();
+        $(`#disease_date1_comp_${name}`).remove();
+        $(`#linear_comp_${name}`).remove();
+        $(`#ruler_comp_${name}`).attr('class', 'my-4 hidden');
+    };
+
+    // run disease
+    function run_province_disease(disease_pro_array = []) {
+        var i = 0;
+        var begin = $(".begin").val();
+        var end = $(".end").val();
+
+        $.each(disease_pro_array, function (index, value) {
+            i++;
+            chosen_province_disease(begin, end, value, i);
+        });
+    };
+
+    // choose province climate
+    function chosen_province_climate(begin, end, name, order) {
+        create_tag_climate(order, name);
+        // pie chart year climate
+        $.ajax({
+            url: "/pie_climate_year",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                climate: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`pie_climate_y_${order}`, data, {});
+                $(`#pie_climate_year_${order}`).html(`Number of ${name.split('_').join('  ')} 
+        by yearly mean  ${begin}-${end}`);
+            },
+        });
+        // line year climate
+        $.ajax({
+            url: "/compare_pro_climate",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                climate: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`climate_pro_y_${order}`, data, {});
+                $(`#climate_pro_year_${order}`).html(`Number of ${name.split('_').join('  ')} 
+        by yearly mean  ${begin}-${end}`);
+            },
+        });
+        // line month climate
+        $.ajax({
+            url: "/compare_pro_climate_month",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                climate: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`climate_pro_m_${order}`, data, {});
+                $(`#climate_pro_month_${order}`).html(`Number of ${name.split('_').join('  ')} 
+        by monthly mean  ${begin}-${end}`);
+            },
+        });
+        // date1 climate
+        // line month climate
+        $.ajax({
+            url: "/comp_date1_climate",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                climate: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`climate_date1_comp_${order}`, data, {});
+                $(`#title_date1_comp_${order}`).html(`Number of ${name.split('_').join('  ')} monthly mean 
+         ${begin}-${end}`);
+            },
+        });
+        // linear year climate
+        $.ajax({
+            url: "/linear_climate_year",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                climate: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`linear_climate_y_${order}`, data, {});
+                $(`#linear_climate_year_${order}`).html(`Linear of ${name.split('_').join('  ')} 
+        by yearly mean  ${begin}-${end}`);
+            },
+        });
+        // linear_climate_month
+        $.ajax({
+            url: "/linear_climate_month",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+                climate: name,
+                begin: begin,
+                end: end,
+                province1: id_click_once,
+                province2: id_click_twice,
+            },
+            dataType: "json",
+            success: function (data) {
+                Plotly.newPlot(`linear_climate_month_${order}`, data, {});
+                $(`#linear_title_month_${order}`).html(`Linear of ${name.split('_').join('  ')} 
+        by monthly mean  ${begin}-${end}`);
+            },
+        });
+    };
+
+    // uncheck climate
+    function unchecked_climate_pro(name) {
+        $(`#climate_comp_${name}`).remove();
+        $(`#date1_comp_${name}`).remove();
+        $(`#linear_comp_climate_${name}`).remove();
+        $(`#ruler_comp0_${name}`).attr('class', 'my-4 hidden');
+    };
+
+    // run province climate
+    function run_province_climate(climate_pro_array = []) {
+        var i = 0;
+        var begin = $(".begin").val();
+        var end = $(".end").val();
+
+        $.each(climate_pro_array, function (index, value) {
+            i++;
+            chosen_province_climate(begin, end, value, i);
+        });
+    };
+    // end choose province climate
+    // check exist data in map Viet Nam
+    function exist_data_comp(id,) {
+        // id data province
+        var id_data = [15, 30, 27, 3, 29, 25, 16, 7, 31, 24, 4, 20, 13, 9, 8, 11, 6,
+            1, 10, 2, 17, 12, 19, 22, 23, 21, 38, 26, 45, 32, 49, 28, 40, 56,
+            42, 43, 61, 35, 41, 37, 55, 34, 57, 48, 36, 59, 60, 52, 62, 46, 39,
+            63, 51, 64, 54];
+        if ((id_data.includes(parseInt(id))) == false) {
+            $.confirm({
+                title: "Compare Province",
+                content: "Data not exist.Please choose another province to compare!",
+                buttons: {
+                    ok: {
+                        btnClas: "btn-primary",
+                    },
+                    cancel: {
+                        btnClass: "btn-danger",
+                    },
+                },
+            });
+            // $(`#${id}`).css("fill", "#ddddbb");
+            return false;
+        }
+        ;
+    };
+    // ajax in here
+    getData_comp(id_click_once, id_click_twice);
+
+    function getData_comp(id, id0) {
+        var begin = $(".begin").val();
+        var end = $(".end").val();
+
+        $.ajax({
+            type: "GET",
+            url: "/popu_response/" + id + '/' + id0,
+            success: function (response) {
+                $(".showresult_popu").html(response.data);
+
+            },
+            data: {
+                begin: begin,
+                end: end,
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    };
+    title_comp(1997, 2019);
+
+    function title_comp(begin, end) {
+        $('.title_comp').html(`Compare By Disease  Province In Viet Nam  ${begin}-${end}`)
+    }
+
+    $('.min_max').html(`(${begin}-${end})`)
 });
 
 $(document).ready(function () {
@@ -3060,10 +3079,15 @@ $(document).ready(function () {
     if (currentURL != '/factor') {
         return false;
     }
-    var province_code = '15';
-     $(".search_pro").change(function (event) {
+    let province_code = '15';
+    let begin = '1997'
+    let end = '2019'
+    let name = 'Lai Châu';
+    $(".search_pro").change(function (event) {
         province_code = $('#province').val();
+        name = $(this).find(':selected').attr('data-target');
         // call fuction
+        title_factor(begin, end);
         chart_subplotly(disease);
     });
     // begin
@@ -3076,8 +3100,8 @@ $(document).ready(function () {
         $(".indicator_begin").text(val);
         $(".indicator_begin").css("left", portion * ($(".begin").width() - 18));
         // correlation
-        var begin = $(".begin").val();
-        var end = $(".end").val();
+        begin = $(".begin").val();
+        end = $(".end").val();
         if (begin > end) {
             $.confirm({
                 title: 'Confirm',
@@ -3110,8 +3134,8 @@ $(document).ready(function () {
         $(".indicator_end").text(val);
         $(".indicator_end").css("left", portion * ($(".end").width() - 18));
 
-        var begin = $(".begin").val();
-        var end = $(".end").val();
+        begin = $(".begin").val();
+        end = $(".end").val();
         if (begin > end) {
             $.confirm({
                 title: 'Confirm',
@@ -3160,7 +3184,6 @@ $(document).ready(function () {
         // check time 
         var begin = $(".begin").val();
         var end = $(".end").val();
-        console.log(province_code);
         // subplotly year
         $.ajax({
             url: "/subplotly_year",
@@ -3223,9 +3246,8 @@ $(document).ready(function () {
     title_factor(1997, 2019);
 
     function title_factor(begin, end) {
-        $('.title_factor').html(` Explore Disease Data In Viet Nam  ${begin}-${end}`)
+        $('.title_factor').html(` Explore By Disease  In ${name}  ${begin}-${end}`)
     }
-
 
 });
 $(document).ready(function () {

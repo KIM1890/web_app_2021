@@ -1242,12 +1242,11 @@ $(document).ready(function () {
     title_explore(1997, 2019);
 
     function title_explore(begin, end) {
-        $name = '';
+        let $name = '';
         $("path").each(function (key, value) {
             $id = $(this).attr('id');
             if ($id == province_code) {
                 $name = $(this).data("original-title");
-                console.log($name);
             }
         })
         $('.title_explore').html(`Explore By Disease In ${$name}  ${begin}-${end}`)

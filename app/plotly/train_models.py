@@ -75,20 +75,34 @@ def models_SARIMA(y, pdq, seasonal_pdq):
     return results
 
 
+# visual dataset training
+def training_dataset(y, disease):
+    fig = go.Figure([go.Scatter(x=y.index, y=y.values, line=dict(color='rgb(31, 119, 180)'))])
+    fig.update_layout(
+        yaxis_title=str(disease),
+        xaxis_title='Date',
+        title=' Training datasets',
+        hovermode="x",
+        width=700,
+        height=500,
+    )
+    return fig
+
+
 # plotly
-def validating_Forecasts_plot(y, pred, pred_ci, code, disease, date_pre, year):
-    ax = y[str(year):]
+def validating_Forecasts_plot(y, pred, pred_ci, code, disease, date_pre, start_year, end_year):
+    ax = y[str(start_year):str(end_year)]
     pred = pred.predicted_mean
     fig = go.Figure([
         go.Scatter(
-            name='observed',
+            name='Real data',
             x=ax.index,
             y=ax.values,
             mode='lines',
             line=dict(color='rgb(31, 119, 180)'),
         ),
         go.Scatter(
-            name='Static Forecast',
+            name='Predicted',
             x=pred.index,
             y=pred.values,
             mode='lines',
@@ -127,18 +141,18 @@ def validating_Forecasts_plot(y, pred, pred_ci, code, disease, date_pre, year):
 
 
 # forecasts_steps
-def forecasts_steps_plot(y, pred_uc, pred_ci, code, disease, date_pre, year):
+def forecasts_steps_plot(y, pred_uc, pred_ci, code, disease, date_pre):
     pred_uc = pred_uc.predicted_mean
     fig = go.Figure([
         go.Scatter(
-            name='observed',
+            name='Real data',
             x=y.index,
             y=y.values,
             mode='lines',
             line=dict(color='rgb(31, 119, 180)'),
         ),
         go.Scatter(
-            name='Forecast',
+            name='Predicted',
             x=pred_uc.index,
             y=pred_uc.values,
             mode='lines',

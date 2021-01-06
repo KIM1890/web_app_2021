@@ -92,23 +92,43 @@ def select_html():
 
                 )),
             ]),
-            # range year
+            # range between
             html.Br(),
             dbc.Row([
-                dbc.Col([
-                    html.B('Datasets from 1997 to 2019:'),
-                    html.Br(),
-                    html.Div(id='output-year'),
-                    html.Br(),
-                    dcc.Slider(
-                        id='year-slider',
-                        min=1997,
-                        max=2019,
-                        step=1,
-                        value=1997,
-                    ),
-                ]),
+                dbc.Col(html.Div(
+                    [
+                        html.Div([
+                            html.B('Datasets from 1997 to 2019:'),
+                            html.Div(id='range-slider-year'),
+                            dcc.RangeSlider(
+                                id='my-range-slider-year',
+                                min=1997,
+                                max=2019,
+                                step=1,
+                                value=[1997, 2019]
+                            ),
+                        ])
+                    ]
+                ))
             ]),
+            # end range year
+            # # range year
+            # html.Br(),
+            # dbc.Row([
+            #     dbc.Col([
+            #         html.B('Datasets from 1997 to 2019:'),
+            #         html.Br(),
+            #         html.Div(id='output-year'),
+            #         html.Br(),
+            #         dcc.Slider(
+            #             id='year-slider',
+            #             min=1997,
+            #             max=2019,
+            #             step=1,
+            #             value=1997,
+            #         ),
+            #     ]),
+            # ]),
             # date range
             dbc.Row([
                 dbc.Col([
@@ -121,33 +141,29 @@ def select_html():
                 ]),
             ]),
 
-            html.Br(),
-            # slice
-            dbc.Row([
-                dbc.Col(
-                    html.Div([
-                        html.B('Selected Timestep:'),
-                        dcc.Slider(
-                            id='my-slider',
-                            min=12,
-                            max=500,
-                            step=12,
-                            value=12,
-                        ),
-                        html.Div(id='slider-output-container')
-                    ]),
-                )
 
-            ]),
             # row parameter to predict
-            # model
+            # models
             html.Hr(),
             html.B('Models Predicted:'),
             html.Br(),
             dbc.Row([
                 dbc.Col([
-                    dbc.Button("SARIMA", color="primary", id="collapse-button",
-                               className="mr-1"),
+                    # dbc.Button("SARIMA", color="primary", id="collapse-button",
+                    #
+                    #  className="mr-1"),
+                    html.Div([
+                        dcc.Dropdown(
+                            id='models-dropdown',
+                            options=[
+                                {'label': 'SARIMA', 'value': 'SARIMA'},
+                                {'label': 'ARIMA', 'value': 'ARIMA'},
+                                {'label': 'Multi Regression', 'value': 'LinearRegression'}
+                            ],
+                            value='SARIMA'
+                        ),
+                    ]),
+
                 ]),
 
             ])

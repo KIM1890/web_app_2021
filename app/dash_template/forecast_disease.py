@@ -20,11 +20,7 @@ import numpy as np
 import io
 import base64
 import matplotlib.pyplot as plt
-from app.plotly.train_models import visual_disease_pre, \
-    numOfDays, \
-    train_dataset, models, \
-    visual_corr, X_, \
-    plotting_data, fitting_data, models_SARIMA
+from app.plotly.train_models import models_SARIMA, validating_Forecasts_plot, forecasts_steps_plot
 
 PATH = pathlib.Path(__file__).parent
 TEMPLATE_PATH = PATH.joinpath("../dash_template").resolve()
@@ -124,7 +120,9 @@ layout = html.Div(
                             # visual data
                             html.Div(id='example'),
                             # forcasting in the feature
-                            html.Div(id='Forecasts'),
+                            html.Div([
+                                dcc.Graph(id='Forecasts')
+                            ], className='Forecasts'),
                         ],
                         className="col-sm-6 text-left"
                     ),
@@ -178,7 +176,7 @@ def training_models(code, disease, p, d, q, P, D, Q, S):
 
 # visualize data
 @app.callback(
-    Output('example', 'children'),
+    Output('visual_fitting', 'figure'),
     Input('province_dropdown', 'value'),
     Input('disease_dropdown', 'value'),
     Input('slice-date', 'date'),
@@ -192,13 +190,14 @@ def validating_Forecasts(code, disease, date_pre, year):
     # end data
     pred = results.get_prediction(start=pd.to_datetime(date_pre), dynamic=False)
     pred_ci = pred.conf_int()
-    fig = validating_Forecasts(y, pred, pred_ci, code, disease, date_pre, year)
+    fig = validating_Forecasts_plot(y, pred, pred_ci, code, disease, date_pre, year)
+    # y, pred, pred_ci, code, disease, date_pre, year
     return fig
 
 
 # forcast in the feature
 @app.callback(
-    Output('Forecasts', 'children'),
+    Output('Forecasts', 'figure'),
     Input('province_dropdown', 'value'),
     Input('disease_dropdown', 'value'),
     Input('slice-date', 'date'),
@@ -214,8 +213,8 @@ def forecasts_steps(code, disease, date_pre, year, time_step):
     pred_uc = results.get_forecast(steps=int(time_step))
 
     pred_ci = pred_uc.conf_int()
-    forecasts_steps(y, pred_uc, pred_ci, code, disease, date_pre, year)
-    return 'success'
+    fig = forecasts_steps_plot(y, pred_uc, pred_ci, code, disease, date_pre, year)
+    return fig
 
 
 #########################################################

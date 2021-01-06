@@ -62,7 +62,7 @@ def AIC_SARIMA(y, pdq, seasonal_pdq):
 
 
 # model training
-# dat them tham so pdq,...
+
 def models_SARIMA(y, pdq, seasonal_pdq):
     mod = sm.tsa.statespace.SARIMAX(y,
                                     order=pdq,
@@ -75,34 +75,99 @@ def models_SARIMA(y, pdq, seasonal_pdq):
     return results
 
 
-# validating_Forecasts
-def validating_Forecasts(y, pred, pred_ci, code, disease, date_pre, year):
-    ax = y[str(year):].plot(label='observed')
-    pred.predicted_mean.plot(ax=ax, label='One-step ahead Forecast', alpha=.7)
-
-    ax.fill_between(pred_ci.index,
-                    pred_ci.iloc[:, 0],
-                    pred_ci.iloc[:, 1], color='k', alpha=.2)
-
-    ax.set_xlabel('Date')
-    ax.set_ylabel(str(disease))
-    plt.legend()
-
-    return plt.show()
+# plotly
+def validating_Forecasts_plot(y, pred, pred_ci, code, disease, date_pre, year):
+    ax = y[str(year):]
+    pred = pred.predicted_mean
+    fig = go.Figure([
+        go.Scatter(
+            name='Measurement',
+            x=ax.index,
+            y=ax.values,
+            mode='lines',
+            line=dict(color='rgb(31, 119, 180)'),
+        ),
+        go.Scatter(
+            name='Measurement',
+            x=pred.index,
+            y=pred.values,
+            mode='lines',
+            # line=dict(color='rgb(31, 119, 180)'),
+        ),
+        go.Scatter(
+            name='Upper Bound',
+            x=pred_ci.index,
+            y=pred_ci.iloc[:, 0],
+            mode='lines',
+            marker=dict(color="#444"),
+            line=dict(width=0),
+            showlegend=False
+        ),
+        go.Scatter(
+            name='Lower Bound',
+            x=pred_ci.index,
+            y=pred_ci.iloc[:, 1],
+            marker=dict(color="#444"),
+            line=dict(width=0),
+            mode='lines',
+            fillcolor='rgba(68, 68, 68, 0.3)',
+            fill='tonexty',
+            showlegend=False
+        )
+    ])
+    fig.update_layout(
+        yaxis_title='Wind speed (m/s)',
+        title='Continuous, variable value error bars',
+        hovermode="x"
+    )
+    return fig
 
 
 # forecasts_steps
-def forecasts_steps(y, pred_uc, pred_ci, code, disease, date_pre, year):
-    ax = y.plot(label='observed', figsize=(20, 15))
-    pred_uc.predicted_mean.plot(ax=ax, label='Forecast')
-    ax.fill_between(pred_ci.index,
-                    pred_ci.iloc[:, 0],
-                    pred_ci.iloc[:, 1], color='k', alpha=.25)
-    ax.set_xlabel('Date')
-    ax.set_ylabel(str(disease))
-
-    plt.legend()
-    return plt.show()
+def forecasts_steps_plot(y, pred_uc, pred_ci, code, disease, date_pre, year):
+    pred_uc = pred_uc.predicted_mean
+    fig = go.Figure([
+        go.Scatter(
+            name='Measurement',
+            x=y.index,
+            y=y.values,
+            mode='lines',
+            line=dict(color='rgb(31, 119, 180)'),
+        ),
+        go.Scatter(
+            name='Measurement',
+            x=pred_uc.index,
+            y=pred_uc.values,
+            mode='lines',
+            # line=dict(color='rgb(31, 119, 180)'),
+        ),
+        go.Scatter(
+            name='Upper Bound',
+            x=pred_ci.index,
+            y=pred_ci.iloc[:, 0],
+            mode='lines',
+            marker=dict(color="#444"),
+            line=dict(width=0),
+            showlegend=False
+        ),
+        go.Scatter(
+            name='Lower Bound',
+            x=pred_ci.index,
+            y=pred_ci.iloc[:, 1],
+            marker=dict(color="#444"),
+            line=dict(width=0),
+            mode='lines',
+            fillcolor='rgba(68, 68, 68, 0.3)',
+            fill='tonexty',
+            showlegend=False
+        )
+    ])
+    fig.update_layout(
+        yaxis_title='Wind speed (m/s)',
+        title='Continuous, variable value error bars',
+        hovermode="x"
+    )
+    return fig
 
 
 # end training mo

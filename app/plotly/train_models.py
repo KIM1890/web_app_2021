@@ -91,7 +91,8 @@ def training_dataset(y, disease):
 
 # plotly
 def validating_Forecasts_plot(y, pred, pred_ci, code, disease, date_pre, start_year, end_year):
-    ax = y[str(start_year):str(end_year)]
+    # ax = y[str(start_year):str(end_year)]
+    ax = y[str(date_pre):]
     pred = pred.predicted_mean
     fig = go.Figure([
         go.Scatter(
@@ -182,7 +183,7 @@ def forecasts_steps_plot(y, pred_uc, pred_ci, code, disease, date_pre):
     fig.update_layout(
         yaxis_title=str(disease),
         xaxis_title='Date',
-        title=' Producing and Visualizing Forecasts',
+        # title=' Producing and Visualizing Forecasts',
         hovermode="x",
         width=700,
         height=500,

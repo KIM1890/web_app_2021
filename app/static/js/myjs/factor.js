@@ -4,6 +4,12 @@ $(document).ready(function () {
     if (currentURL != '/factor') {
         return false;
     }
+    var province_code = '15';
+     $(".search_pro").change(function (event) {
+        province_code = $('#province').val();
+        // call fuction
+        chart_subplotly(disease);
+    });
     // begin
     $(".begin").on("input", function () {
         var val = $(this).val();
@@ -72,9 +78,13 @@ $(document).ready(function () {
         title_factor(begin, end);
         chart_subplotly(disease);
     });
+    // province
+    // select province code
+
     // disease
     var disease = 'influenza'
     $('.disease_select')[0].checked = true;
+
     $('.disease_select').click(function () {
         if (this.checked) {
             disease = $(this).val().toLowerCase();
@@ -94,8 +104,8 @@ $(document).ready(function () {
         // check time 
         var begin = $(".begin").val();
         var end = $(".end").val();
-
-        // subplotly year 
+        console.log(province_code);
+        // subplotly year
         $.ajax({
             url: "/subplotly_year",
             type: "GET",
@@ -104,7 +114,8 @@ $(document).ready(function () {
                 disease: disease,
                 begin: begin,
                 end: end,
-                y_m: year_month
+                y_m: year_month,
+                code: province_code
             },
             dataType: "json",
             success: function (data) {
@@ -124,6 +135,7 @@ $(document).ready(function () {
                 disease: disease,
                 begin: begin,
                 end: end,
+                code: province_code
             },
             dataType: "json",
             success: function (data) {
@@ -140,6 +152,7 @@ $(document).ready(function () {
                 disease: disease,
                 begin: begin,
                 end: end,
+                code: province_code
             },
             dataType: "json",
             success: function (data) {
@@ -150,10 +163,12 @@ $(document).ready(function () {
         });
     };
     chart_subplotly(disease);
+
     title_factor(1997, 2019);
 
     function title_factor(begin, end) {
         $('.title_factor').html(` Explore Disease Data In Viet Nam  ${begin}-${end}`)
     }
+
 
 });

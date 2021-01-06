@@ -58,6 +58,7 @@ layout = html.Div(
                                                     placeholder="p...", bs_size="md",
                                                     className="mb-3",
                                                     min=0,
+                                                    max=1,
                                                     value=1,
                                                     type='number'
 
@@ -68,38 +69,40 @@ layout = html.Div(
                                                     placeholder="d...", bs_size="md",
                                                     className="mb-3",
                                                     min=0,
+                                                    max=1,
                                                     value=1,
                                                     type='number'
                                                 ),
                                                 dbc.Label("Moving Average  (q)"),
                                                 dbc.Input(placeholder="q...", bs_size="md",
                                                           value=1,
+                                                          max=1,
                                                           id='q',
                                                           type='number', min=0),
                                                 # p
                                                 html.Br(),
                                                 dbc.Label("(P)"),
                                                 dbc.Input(placeholder="P...", bs_size="md",
-                                                          value=1, id='P',
+                                                          value=1, id='P', max=1,
                                                           type='number', min=0),
                                                 # d
                                                 html.Br(),
                                                 dbc.Label("(D)"),
                                                 dbc.Input(placeholder="D...", bs_size="md",
-                                                          value=1, id='D',
+                                                          value=1, id='D', max=1,
                                                           type='number', min=0),
                                                 # q
                                                 html.Br(),
                                                 dbc.Label("(Q)"),
                                                 dbc.Input(placeholder="Q...", bs_size="md",
-                                                          value=1, id='Q',
+                                                          value=1, id='Q', max=1,
                                                           type='number', min=0),
                                                 # s
                                                 html.Br(),
                                                 dbc.Label("(S)"),
                                                 dbc.Input(placeholder="S...", bs_size="md",
                                                           value=12, id='S',
-                                                          type='number', min=0),
+                                                          type='number', min=12),
                                             ]
                                         ),
                                     ]
@@ -122,7 +125,7 @@ layout = html.Div(
                             html.Div(id='title_pred', style={'color': 'orange'}),
                             html.Div(id='summary_data'),
                             # summary models
-                            html.Div(id='summary_models'),
+                            html.Div(id='summary_arima'),
                             html.Hr(),
                             # visual training datasets
                             html.Div([dcc.Graph(id='visual_training')], className='visual_training'),
@@ -131,7 +134,7 @@ layout = html.Div(
                                 dcc.Graph(id='visual_fitting')
                             ], className='visual_fitting'),
                             # The Mean Squared Error of our forecasts
-                            html.H4('Accuracy Models'),
+                            html.P('Accuracy Models'),
                             html.B(id='mse'),
                             # visual data
                             html.Div(id='example'),
@@ -158,6 +161,10 @@ layout = html.Div(
                             html.Div([
                                 dcc.Graph(id='Forecasts')
                             ], className='Forecasts'),
+                            html.Br(),
+                            html.Div([
+                                html.B(id='AIC'),
+                            ]),
                         ],
                         className="col-sm-6 text-left"
                     ),
@@ -202,8 +209,10 @@ def summary_models(code, disease):
         "Disease to forecasts: {}".format(str(disease)), html.Br(),
         "Datasets Shape:                  {}".format(y[str(disease)].shape), html.Br(),
         "Count:              {}".format(round(y[str(disease)].count()), html.Br(),
-                                        "Mean:              {}".format(round(y[str(disease)].mean(), 4)), html.Br(),
-                                        "STD: {}".format(y[str(disease)].std())), html.Br(),
+                                        "Mean:              {}".format(round(y[str(disease)].mean(), 4))
+                                        , html.Br(),
+                                        "STD: {}".format(y[str(disease)].std())),
+        html.Br(),
         "Min:                {}".format(y[str(disease)].min()), html.Br(),
         'Max:                {}'.format(y[str(disease)].max()), html.Br()
     ])
@@ -287,6 +296,15 @@ def accurancy(code, disease, date_pre, values):
     ])
 
 
+# AIC (Akaike Information Criterion) value
+@app.callback(
+    Output('AIC', 'children'),
+    Input('province_dropdown', 'value'),
+)
+def aic(code):
+    return "-AIC (Akaike Information Criterion) value: {}".format(round(results.aic, 4))
+
+
 # forcast in the feature
 @app.callback(
     Output('Forecasts', 'figure'),
@@ -327,11 +345,13 @@ def toggle_collapse(n, is_open):
 # modal
 @app.callback(
     Output("modal", "is_open"),
-    [Input("open", "n_clicks"), Input("cancel", "n_clicks")],
+    [Input("open", "n_clicks"),
+     Input("cancel", "n_clicks"),
+     Input("save", "n_clicks")],
     [State("modal", "is_open")],
 )
-def toggle_modal(n1, n2, is_open):
-    if n1 or n2:
+def toggle_modal(n1, n2, n3, is_open):
+    if n1 or n2 or n3:
         return not is_open
     return is_open
 
@@ -372,6 +392,6 @@ def update_output(value):
 # input model
 @app.callback(
     Output('title_pred', 'children'),
-    [Input('year-slider', 'value')])
+    [Input('my-range-slider-year', 'value')])
 def update_output(value):
-    return 'Datasets of Viet Nam From "{}"'.format(value)
+    return 'Datasets disease of Viet Nam From "{}"'.format(value)

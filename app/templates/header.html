@@ -1,137 +1,143 @@
 <!-- Start Welcome area -->
 <div class="all-content-wrapper">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="logo-pro">
-          <a href="/"><img class="main-logo" src="./static/img/logo.png" height="50px" width="60px" />
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- menu header  -->
-  <div class="header-advance-area">
-    <div class="header-top-area" >
-      <div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="header-top-wraper">
-              <div class="row">
-                <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
-                  <div class="menu-switcher-pro">
-                    <button type="button" id="sidebarCollapse"
-                      class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-                      <i class="educate-icon educate-nav"></i>
-                    </button>
-                  </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="logo-pro">
+                    <a href="/"><img class="main-logo" src="./static/img/viruss.jpg" height="50px" width="60px"/>
+                    </a>
                 </div>
-                <!-- menu ngang -->
-                <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
-                  <div class="header-top-menu tabl-d-n">
-                    <ul class="nav mai-top-nav navbar-header">
-                      <!-- <summary></summary> -->
-                      <li class="nav-item dropdown res-dis-nn">
-                        <a href="/home">Summary Data</a>
-                      </li>
-                      <!-- explore -->
-                      <li class="nav-item dropdown res-dis-nn">
-                        <!-- <a href='/explore'>Explore Data</a> -->
-                        <a data-toggle="dropdown" role="button" aria-expanded="false"
-                          class="nav-link dropdown-toggle">Explore Data
-                          <span class="angle-down-topmenu"></span></a>
-                        <div role="menu" class="dropdown-menu animated zoomIn">
-                          <a href="/explore" class="dropdown-item">Explore Province</a>
-                          <a href="/factor" class="dropdown-item">Explore Disease</a>
-                        </div>
-                      </li>
-                      <!-- compare -->
-                      <li class="nav-item dropdown res-dis-nn">
-                        <a data-toggle="dropdown" role="button" aria-expanded="false"
-                          class="nav-link dropdown-toggle">Compare
-                          <span class="angle-down-topmenu"></span></a>
-                        <div role="menu" class="dropdown-menu animated zoomIn">
-                          <a href="/compare" class="dropdown-item">Compare Province</a>
-                          <!-- <a href="/factor" class="dropdown-item">Factor Data</a> -->
-                        </div>
-                      </li>
-                      <!--Prediction -->
-                      <li class="nav-item dropdown res-dis-nn">
-                        <a data-toggle="dropdown" role="button" aria-expanded="false"
-                          class="nav-link dropdown-toggle">Prediction
-                          <span class="angle-down-topmenu"></span></a>
-                        <div role="menu" class="dropdown-menu animated zoomIn">
-                          <a href="/" class="dropdown-item">Predict Disease</a>
-                          <!-- <a href="/factor" class="dropdown-item">Factor</a> -->
-                        </div>
-                      </li>
-                      
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-    <!-- Mobile Menu start -->
-    <div class="mobile-menu-area">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="mobile-menu">
-              <nav id="dropdown">
-                <ul class="mobile-menu-nav">
-                  <li><a data-toggle="collapse" data-target="#Charts">Disease <span
-                        class="admin-project-icon edu-icon edu-down-arrow"></span></a>
-                    <ul class="collapse dropdown-header-top">
-                      <li><a>
-                          {% for opt in disease %}
-                          <input type="checkbox" id="{{opt}}" class="check_disease" value="{{opt.strip()}}"
-                            name="check_test" data-check="disease" />
-                          <label for="{{opt}}">{{(opt.replace('_',' ')).title()}}</label><br />
-                          {% endfor %}
-                        </a></li>
-                    </ul>
-                  </li>
-                  <li><a data-toggle="collapse" data-target="#demoevent" href="#">Climate<span
-                        class="admin-project-icon edu-icon edu-down-arrow"></span></a>
-                    <ul id="demoevent" class="collapse dropdown-header-top">
-                      <li><a>
-                          {% for opt in climate1 %}
-                          <input type="checkbox" id="{{opt}}" class="check_climate" value="{{opt.strip()}}"
-                            name="check_test" data-check="climate" />
-                          <label for="{{opt}}">{{(opt.replace('_',' ')).title()}}</label><br />
-                          {% endfor %}
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a title="Landing Page" aria-expanded="false"><span
-                        class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true">
+    <!-- menu header  -->
+    <div class="header-advance-area">
+        <div class="header-top-area">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="header-top-wraper">
+                            <div class="row">
+                                <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
+                                    <div class="menu-switcher-pro">
+                                        <button type="button" id="sidebarCollapse"
+                                                class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
+                                            <i class="educate-icon educate-nav"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- menu ngang -->
+                                <div class="col-lg-10 col-md-7 col-sm-6 col-xs-12">
+                                    <div class="header-top-menu tabl-d-n">
+                                        <ul class="nav mai-top-nav navbar-header">
+                                            <!-- <summary></summary> -->
+                                            <li class="nav-item dropdown res-dis-nn">
+                                                <a href="/home">Summary Data</a>
+                                            </li>
+                                            <!-- explore -->
+                                            <li class="nav-item dropdown res-dis-nn">
+                                                <!-- <a href='/explore'>Explore Data</a> -->
+                                                <a data-toggle="dropdown" role="button" aria-expanded="false"
+                                                   class="nav-link dropdown-toggle">Explore Data
+                                                    <span class="angle-down-topmenu"></span></a>
+                                                <div role="menu" class="dropdown-menu animated zoomIn">
+                                                    <a href="/explore" class="dropdown-item">Explore By Province</a>
+                                                    <a href="/factor" class="dropdown-item">Explore By Disease</a>
+                                                </div>
+                                            </li>
+                                            <!-- compare -->
+                                            <li class="nav-item dropdown res-dis-nn">
+                                                <a data-toggle="dropdown" role="button" aria-expanded="false"
+                                                   class="nav-link dropdown-toggle">Compare Data
+                                                    <span class="angle-down-topmenu"></span></a>
+                                                <div role="menu" class="dropdown-menu animated zoomIn">
+                                                    <a href="/compare" class="dropdown-item">Compare By Province</a>
+                                                    <!-- <a href="/factor" class="dropdown-item">Factor Data</a> -->
+                                                </div>
+                                            </li>
+                                            <!--Prediction -->
+                                            <li class="nav-item dropdown res-dis-nn">
+                                                <a data-toggle="dropdown" role="button" aria-expanded="false"
+                                                   class="nav-link dropdown-toggle">Prediction Data
+                                                    <span class="angle-down-topmenu"></span></a>
+                                                <div role="menu" class="dropdown-menu animated zoomIn">
+                                                    <a href="/" class="dropdown-item">Predict By Disease</a>
+                                                    <!-- <a href="/factor" class="dropdown-item">Factor</a> -->
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu start -->
+        <div class="mobile-menu-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="mobile-menu">
+                            <nav id="dropdown">
+                                <ul class="mobile-menu-nav">
+                                    <li><a data-toggle="collapse" data-target="#Charts">Disease <span
+                                            class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <ul class="collapse dropdown-header-top">
+                                            <li><a>
+                                                {% for opt in disease %}
+                                                    <input type="checkbox" id="{{ opt }}" class="check_disease"
+                                                           value="{{ opt.strip() }}"
+                                                           name="check_test" data-check="disease"/>
+                                                    <label for="{{ opt }}">{{ (opt.replace('_',' ')).title() }}</label>
+                                                    <br/>
+                                                {% endfor %}
+                                            </a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a data-toggle="collapse" data-target="#demoevent" href="#">Climate<span
+                                            class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <ul id="demoevent" class="collapse dropdown-header-top">
+                                            <li><a>
+                                                {% for opt in climate1 %}
+                                                    <input type="checkbox" id="{{ opt }}" class="check_climate"
+                                                           value="{{ opt.strip() }}"
+                                                           name="check_test" data-check="climate"/>
+                                                    <label for="{{ opt }}">{{ (opt.replace('_',' ')).title() }}</label>
+                                                    <br/>
+                                                {% endfor %}
+                                            </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a title="Landing Page" aria-expanded="false"><span
+                                                class="educate-icon educate-event icon-wrap sub-icon-mg"
+                                                aria-hidden="true">
                         Begin
                       </span>
-                      <span class="indicator_begin">1997<span></span></span>
-                      <input type="range" min="1997" max="2019" value="1997" class="begin" />
-                    </a>
-                  </li>
-                  <li>
-                    <a title="Landing Page" aria-expanded="false"><span
-                        class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true">
+                                            <span class="indicator_begin">1997<span></span></span>
+                                            <input type="range" min="1997" max="2019" value="1997" class="begin"/>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a title="Landing Page" aria-expanded="false"><span
+                                                class="educate-icon educate-event icon-wrap sub-icon-mg"
+                                                aria-hidden="true">
                         End
                       </span>
-                      <span class="indicator_end">2019<span></span></span>
-                      <input type="range" min="1997" max="2019" value="2019" class="end" />
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+                                            <span class="indicator_end">2019<span></span></span>
+                                            <input type="range" min="1997" max="2019" value="2019" class="end"/>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 {#</div>#}

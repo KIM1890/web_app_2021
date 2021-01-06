@@ -77,7 +77,7 @@ def select_html():
                 dbc.Col(html.Div(
                     # province
                     [
-                        html.B('Selected Climate:'),
+                        html.B('Selected Attribute:'),
                         html.Br(),
                         dcc.Dropdown(
                             options=[
@@ -140,7 +140,6 @@ def select_html():
                     ),
                 ]),
             ]),
-
 
             # row parameter to predict
             # models

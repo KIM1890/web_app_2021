@@ -1,5 +1,5 @@
 import dash_core_components as dcc
-from dash.dependencies import Input, Output,State
+from dash.dependencies import Input, Output, State
 from flask import Flask, render_template, request, jsonify
 from app.database import models
 from flask_assets import Bundle, Environment
@@ -15,8 +15,6 @@ visual = vp.Visual()
 # get data viet nam to map
 vn_json = query.read_json_vn()
 
-
-
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div([
@@ -30,12 +28,10 @@ app.layout = html.Div([
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-
     if pathname == '/':
         return forecast_disease.layout
     elif pathname == '/home':
         home()
-
 
 
 ##################################################
@@ -45,7 +41,6 @@ def listToString(s):
     for ele in s:
         str1 += ele
     return str1
-
 
 
 # create route cho dash home
@@ -872,8 +867,7 @@ def popu_response(id, id0):
                                             feature_selected=feature_selected)})
 
 
-# compare factor
-
+########################## compare factor####################################
 
 @server.route('/factor')
 def factor():
@@ -900,10 +894,13 @@ def factor():
 
 @server.route('/subplotly', methods=['GET', 'POST'])
 def subplotly():
-    data = query.get_to_climate_disease()
     disease = request.args['disease']
     begin = request.args['begin']
     end = request.args['end']
+    code = request.args['code']
+    # get database province
+    # data = query.get_to_climate_disease()
+    data = query.get_to_climate_disease_province(code)
     sub = visual.compare_factor(data, disease, begin, end)
     return sub
 
@@ -917,8 +914,10 @@ def subplotly_year():
     begin = request.args['begin']
     end = request.args['end']
     y_m = request.args['y_m']
-    # get data
-    data = query.get_to_climate_disease()
+    code = request.args['code']
+    # get data province
+    # data = query.get_to_climate_disease()
+    data = query.get_to_climate_disease_province(code)
     sub = visual.compare_factor_year(data, disease, y_m, begin, end)
     return sub
 
@@ -928,10 +927,13 @@ def subplotly_year():
 
 @server.route('/corr_factor', methods=['GET', 'POST'])
 def corr_factor():
-    data = query.get_to_climate_disease()
     disease = request.args['disease']
     begin = request.args['begin']
     end = request.args['end']
+    code = request.args['code']
+    # data = query.get_to_climate_disease()
+    data = query.get_to_climate_disease_province(code)
+
     sub = visual.corr_factor(data, disease, begin, end)
     return sub
 

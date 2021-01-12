@@ -1,6 +1,9 @@
-.navbar {
-    margin-bottom: 0;
-    border-radius: 0;
-    height: 80px;
-    width: 100%;
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding-left: 250px;
+    z-index: unset;
+    background-color: #003f72;
 }

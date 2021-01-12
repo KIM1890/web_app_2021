@@ -19,7 +19,7 @@ import statsmodels.api as sm
 warnings.filterwarnings("ignore")
 # file path
 PATH = pathlib.Path(__file__).parent
-FILE_MODEL = PATH.joinpath("../dash_template").resolve()
+FILE_MODEL = PATH.joinpath("../apps").resolve()
 
 # training model arima
 p = d = q = range(0, 2)

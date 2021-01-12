@@ -12,7 +12,7 @@ from sklearn import linear_model, tree, neighbors
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 import dash_bootstrap_components as dbc
 from app import app
-from app.dash_template import menu
+from app.apps import menu
 from app.plotly import train_models
 from app.database.models import GetData
 from IPython.display import HTML
@@ -24,7 +24,7 @@ from app.plotly.train_models import models_SARIMA, \
     training_dataset
 
 PATH = pathlib.Path(__file__).parent
-TEMPLATE_PATH = PATH.joinpath("../dash_template").resolve()
+TEMPLATE_PATH = PATH.joinpath("../apps").resolve()
 results = pickle.load(open(TEMPLATE_PATH.joinpath('models.pkl'), 'rb'))
 
 query = GetData()
@@ -34,9 +34,6 @@ layout = html.Div(
         html.Div(
             [html.Div(
                 [
-                    # menu
-                    menu.select_html(),
-                    # result in here
                     html.Br(), html.Br(),
                     html.Div([
                         dbc.Button("SET PARAMETER", outline=True, color="primary", id="open",
@@ -178,8 +175,7 @@ layout = html.Div(
 
     className="body")
 
-
-# testing in training and testing datasets with sarima
+app.title = 'Predicted'
 # visual training model
 @app.callback(
     Output('visual_training', 'figure'),

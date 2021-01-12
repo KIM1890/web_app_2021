@@ -20,7 +20,7 @@ col_climate = query.get_to_climate()
 
 
 # end columns
-def select_html():
+def menu_html():
     nav = html.Div(
         [
             # row 1 processing data
@@ -82,10 +82,10 @@ def select_html():
                         dcc.Dropdown(
                             options=[
                                 {'label': name.replace('_', ' '), 'value': name}
-                                for name in col_climate
+                                for name in
+                                col_climate.drop(['province_name', 'code', 'fips', 'year', 'region'], axis=1)
                             ],
-                            value='evaporation',
-                            disabled=True
+                            value='vaporation',
                         ),
 
                     ],
@@ -111,25 +111,7 @@ def select_html():
                     ]
                 ))
             ]),
-            # end range year
-            # # range year
-            # html.Br(),
-            # dbc.Row([
-            #     dbc.Col([
-            #         html.B('Datasets from 1997 to 2019:'),
-            #         html.Br(),
-            #         html.Div(id='output-year'),
-            #         html.Br(),
-            #         dcc.Slider(
-            #             id='year-slider',
-            #             min=1997,
-            #             max=2019,
-            #             step=1,
-            #             value=1997,
-            #         ),
-            #     ]),
-            # ]),
-            # date range
+            # time to predicted
             dbc.Row([
                 dbc.Col([
                     dcc.DatePickerSingle(
@@ -140,8 +122,7 @@ def select_html():
                     ),
                 ]),
             ]),
-
-            # row parameter to predict
+            # end time to predicted
             # models
             html.Hr(),
             html.B('Models Predicted:'),

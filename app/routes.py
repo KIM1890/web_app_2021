@@ -1,4 +1,5 @@
 import dash_core_components as dcc
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from flask import Flask, render_template, request, jsonify
 from app.database import models
@@ -7,7 +8,7 @@ from app.plotly import visual_plotly as vp
 import dash_html_components as html
 from app import app
 from app import server
-from app.dash_template import forecast_disease, header
+from app.apps import forecast, header, menu
 
 # connect database
 query = models.GetData()
@@ -15,13 +16,34 @@ visual = vp.Visual()
 # get data viet nam to map
 vn_json = query.read_json_vn()
 
+# app dash python
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
-    html.Div([
-        header.header_html(),
+    # header
+    dbc.Row(
+        dbc.Col(
+            html.Div(header.header_html()
+                     )
+        ),
 
-    ], className="row"),
-    html.Div(id='page-content', children=[])
+    ),
+    # menu
+    html.Br(), html.Br(),
+    html.Br(), html.Br(),
+    dbc.Row(
+        [
+            dbc.Col(menu.menu_html(), className="col-3"),
+            # content to pages website
+            dbc.Col(
+                [
+                    html.Div(id='page-content')
+                ],
+
+            )
+            # end content to pages website
+        ]
+    ),
+
 ])
 
 
@@ -29,7 +51,7 @@ app.layout = html.Div([
               [Input('url', 'pathname')])
 def display_page(pathname):
     if pathname == '/':
-        return forecast_disease.layout
+        return forecast.layout
     elif pathname == '/home':
         home()
     elif pathname == '/explore':

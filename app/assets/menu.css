@@ -1,68 +1,38 @@
-.img_a {
-    padding-left: -10px;
-    padding-top: 10px;
-}
-
-.title_disease {
-    padding-left: 60px;
-}
-
-#colclass {
-    background-color: grey;
-}
-
-.menu_vertical {
-    max-height: fit-content;
-    height: 1000px;
-}
-
-a li ::marker {
-    list-style: none;
-}
-
-
-/* Remove the navbar's default margin-bottom and rounded borders */
-.navbar {
-    margin-bottom: 0;
-    border-radius: 0;
-    height: 80px;
-}
-
-
-/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-.row.content {
-    height: 450px
-}
-
-/* Set gray background color and 100% height */
+/* The sidebar menu */
 .sidenav {
-    padding-top: 20px;
-    background-color: whitesmoke;
-    height: 2500px;
-    /*overflow-y: auto;*/
-    /*overflow-x: hidden;*/
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 250px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: unset; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: whitesmoke; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
 }
 
-element.style {
-    font-size: large;
+/* The navigation menu links */
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #818181;
+  display: block;
 }
 
-/* Set black background color, white text and some padding */
-/*footer {*/
-/*    background-color: #555;*/
-/*    color: darkgray;*/
-/*    padding: 15px;*/
-/*}*/
-
-/* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and (max-width: 767px) {
-    .sidenav {
-        height: auto;
-        padding: 15px;
-    }
-
-    .row.content {
-        height: auto;
-    }
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: whitesmoke;
 }
 
+/* Style page content */
+.main {
+  margin-left: 160px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 150px;}
+  .sidenav a {font-size: 18px;}
+}

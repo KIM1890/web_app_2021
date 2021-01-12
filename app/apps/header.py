@@ -2,7 +2,7 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 
-PLOTLY_LOGO = "/assets/img/logo.png"
+PLOTLY_LOGO = "/assets/img/virus.png"
 
 
 def header_html():
@@ -23,7 +23,7 @@ def header_html():
                                 html.Li(
                                     [
                                         dbc.NavItem(
-                                            dbc.NavLink("Summary Data", href="http://127.0.0.1:8050/home"
+                                            dbc.NavLink("Summary Data", href="http://127.0.0.1:8000/home"
                                                         )),
                                         # code in here
                                     ]
@@ -33,9 +33,9 @@ def header_html():
                                     [
                                         dbc.DropdownMenu(
                                             [dbc.DropdownMenuItem('Explore Province',
-                                                                  href="http://127.0.0.1:8050/explore"),
+                                                                  href="http://127.0.0.1:8000/explore"),
                                              dbc.DropdownMenuItem("Explore Disease",
-                                                                  href="http://127.0.0.1:8050/factor")],
+                                                                  href="http://127.0.0.1:8000/factor")],
                                             label="Explore Data",
                                             # style={'color': 'white'},
                                             nav=True,
@@ -46,7 +46,7 @@ def header_html():
                                 html.Li(
                                     [
                                         dbc.NavItem(
-                                            dbc.NavLink("Compare Province", href="http://127.0.0.1:8050/compare"
+                                            dbc.NavLink("Compare Province", href="http://127.0.0.1:8000/compare"
                                                         )),
                                     ]
                                 ),
@@ -66,6 +66,6 @@ def header_html():
                 )],
                 className="container-fluid")
         ],
-        className="navbar navbar-default "
+        className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top"
     )
     return navbar
